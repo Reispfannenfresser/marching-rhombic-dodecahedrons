@@ -1,99 +1,62 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-class Chunk {
-	public readonly Vector3Int position;
-	BlockState[,,] blocks;
-	private readonly World world;
-
-	public Mesh mesh {get; private set;} = null;
-	private readonly int size;
-
-	public Chunk(World world, Vector3Int position, int size) {
-		this.size = size;
-		this.world = world;
-		this.position = position;
-		this.blocks = new BlockState[size, size, size];
-		for(int x = 0; x < size; x++) {
-			for(int y = 0; y < size; y++) {
-				for(int z = 0; z < size; z++) {
-					blocks[x, y, z] = new BlockState(new Vector3Int(x, y, z), true);
-				}
-			}
-		}
-
-		mesh = new Mesh();
-		RegenerateMesh();
-	}
-
-	private void RegenerateMesh() {
-		mesh.Clear();
-
-		List<Vector3> vertices = new List<Vector3>();
-		List<int> triangles = new List<int>();
-		List<Vector3> normals = new List<Vector3>();
-		for(int x = 0; x < size; x++) {
-			for(int y = 0; y < size; y++) {
-				for(int z = 0; z < size; z++) {
-					Vector3Int blockPos = new Vector3Int(x, y, z);
-					if (GetBlockState(blockPos).solid) {
-						int offset = vertices.Count;
-						foreach (Vector3 vertex in MeshData.vertices) {
-							vertices.Add(World.GridToLocal(blockPos) + vertex);
-						}
-						foreach (int index in MeshData.triangles) {
-							triangles.Add(offset + index);
-						}
-						foreach (Vector3 normal in MeshData.normals) {
-							normals.Add(normal);
-						}
-					}
-				}
-			}
-		}
-
-		mesh.vertices = vertices.ToArray();
-		mesh.triangles = triangles.ToArray();
-		mesh.normals = normals.ToArray();
-	}
-
-	public BlockState GetBlockState(Vector3Int blockPos) {
-		return blocks[blockPos.x, blockPos.y, blockPos.z];
-	}
-}
-
 class World : MonoBehaviour {
 	[field: SerializeField]
-	public int chunkSize {get;} = 10;
+	public Vector3Int chunkSize {get; private set;} = new Vector3Int(10, 10, 10);
 	[field: SerializeField]
-	public int rendererCount {get;} = 1;
+	public int chunkRendererCount {get; private set;} = 1;
+	[field: SerializeField]
+	public GameObject chunkRenderer {get; private set;} = null;
 
 	Dictionary<Vector3Int, Chunk> chunks = new Dictionary<Vector3Int, Chunk>();
 
 	void Awake() {
-		Chunk chunk = new Chunk(this, Vector3Int.zero, chunkSize);
-		MeshFilter meshFilter = GetComponent<MeshFilter>();
-		meshFilter.mesh = chunk.mesh;
+		GenerateChunk(Vector3Int.zero);
+		RenderChunk(Vector3Int.zero);
+	}
+
+	void GenerateChunk(Vector3Int chunkPos) {
+		chunks.Add(chunkPos, new Chunk(this, chunkPos));
+	}
+
+	void RenderChunk(Vector3Int chunkPos) {
+		if (!chunks.ContainsKey(chunkPos)) {
+			return;
+		}
+
+		Vector3 pos = new Vector3Int(chunkPos.x * chunkSize.x, chunkPos.y * chunkSize.y, chunkPos.z * chunkSize.z);
+		GameObject newChunkRenderer = Instantiate(chunkRenderer, pos, Quaternion.identity, transform);
+		newChunkRenderer.GetComponent<MeshFilter>().mesh = chunks[chunkPos].mesh;
 	}
 
 	public static Vector3 GridToLocal(Vector3Int gridPos) {
-		return gridPos.x * new Vector3(2, 0, 0) + gridPos.y * new Vector3(1, 1, 0) + gridPos.z * new Vector3(1, 0, 1);
+		Vector3 pos = gridPos.x * new Vector3(1, 0, -1) + gridPos.y * new Vector3(1, 1, 0) + gridPos.z * new Vector3(1, 0, 1);
+		return pos;
 	}
 
 	public static Vector3Int LocalToGrid(Vector3 localPos) {
-		Vector3 transformed = localPos.x * new Vector3(0.5f, 0, 0) + localPos.y * new Vector3(-0.5f, 1, 0) + localPos.z * new Vector3(-0.5f, 0, 1);
-		return new Vector3Int((int) Mathf.Round(transformed.x), (int) Mathf.Round(transformed.y), (int) Mathf.Round(transformed.z));
+		float roundedY = Mathf.Round(localPos.y * 0.5f) * 2;
+		float remainingY = localPos.y - roundedY;
+
+		Vector3 pos = localPos.x * new Vector3(0.5f, 0, 0.5f) + roundedY * new Vector3(-0.5f, 1, -0.5f) + localPos.z * new Vector3(-0.5f, 0, 0.5f);
+
+		if (Mathf.Abs(pos.x - Mathf.Round(pos.x)) + Mathf.Abs(remainingY) + Mathf.Abs(pos.z - Mathf.Round(pos.z)) > 1) {
+			pos += new Vector3(-0.5f, 1, -0.5f) * ((remainingY > 0) ? 1 : -1);
+		}
+
+		return new Vector3Int((int) Mathf.Round(pos.x), (int) Mathf.Round(pos.y), (int) Mathf.Round(pos.z));
 	}
 
 	public BlockState GetBlockState(Vector3Int position) {
 		Vector3Int chunkPos = Vector3Int.zero;
 		Vector3Int blockPos = Vector3Int.zero;
 		for(int i = 0; i < 3; i++) {
-			chunkPos[i] = position[i] / chunkSize;
-			blockPos[i] = position[i] % chunkSize;
+			chunkPos[i] = position[i] / chunkSize[i];
+			blockPos[i] = position[i] % chunkSize[i];
 			if (position[i] < 0 && blockPos[i] != 0) {
 				chunkPos[i] -= 1;
-				blockPos[i] += chunkSize;
+				blockPos[i] += chunkSize[i];
 			}
 		}
 
