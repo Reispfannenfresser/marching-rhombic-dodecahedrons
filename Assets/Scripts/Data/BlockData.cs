@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class BlockState {
+public class BlockData {
 	public readonly bool solid;
 	public readonly Vector3Int position;
 
-	public BlockState(Vector3Int position, bool solid) {
+	public BlockData(Vector3Int position, bool solid) {
 		this.position = position;
 		this.solid = solid;
 	}
