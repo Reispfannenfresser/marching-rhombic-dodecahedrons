@@ -46,13 +46,13 @@ class WorldModifyingBat : MonoBehaviour{
 
 	void FixedUpdate() {
 		Vector3Int gridPos = RDGrid.FromLocal(transform.position);
-		BlockData blockData = GameController.instance.worldData.GetBlockData(gridPos);
+		BlockData blockData = GameController.instance.worldData.blocks[gridPos];
 		if (blockData == null) {
 			//Destroy(gameObject);
 			return;
 		}
 		if (blockData.solid == eating) {
-			GameController.instance.worldData.SetBlockData(gridPos, new BlockData(gridPos, !eating));
+			GameController.instance.worldData.blocks[gridPos] = new BlockData(gridPos, !eating);
 		}
 	}
 }

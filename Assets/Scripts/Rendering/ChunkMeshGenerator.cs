@@ -14,10 +14,10 @@ public static class ChunkMeshGenerator {
 			for(int y = 0; y < chunkData.worldData.chunkSize.y; y++) {
 				for(int z = 0; z < chunkData.worldData.chunkSize.z; z++) {
 					Vector3Int blockPos = new Vector3Int(x, y, z);
-					if (chunkData.GetBlockData(blockPos).solid) {
+					if (chunkData.blocks[blockPos].solid) {
 						int offset = vertices.Count;
 						foreach (FaceDirection direction in Enum.GetValues(typeof(FaceDirection))) {
-							BlockData neighbor = chunkData.GetBlockData(blockPos + direction.GetVector());
+							BlockData neighbor = chunkData.blocks[blockPos + direction.GetVector()];
 							if (neighbor == null || !neighbor.solid) {
 								int triangleIndexOffset = vertices.Count;
 								foreach(Vector3 vertex in MeshData.vertices[(int) direction]) {

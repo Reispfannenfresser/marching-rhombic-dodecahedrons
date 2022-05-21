@@ -25,6 +25,7 @@ public class WorldRenderer : MonoBehaviour {
 			IEnumerator<ChunkRenderer> enumerator = ChunkRenderer.dirtyChunkRenderers.GetEnumerator();
 			enumerator.MoveNext();
 			if (enumerator.Current != null) {
+				Debug.Log("Updating: " + enumerator.Current.chunkData.chunkPosition);
 				enumerator.Current.dirty = false;
 			}
 		}

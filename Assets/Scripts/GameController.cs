@@ -16,22 +16,14 @@ class GameController : MonoBehaviour {
 			instance = this;
 		}
 
-		worldData.GenerateChunk(new Vector3Int(0, 0, 0));
-		worldData.GenerateChunk(new Vector3Int(0, 0, -1));
-		worldData.GenerateChunk(new Vector3Int(0, -1, 0));
-		worldData.GenerateChunk(new Vector3Int(0, -1, -1));
-		worldData.GenerateChunk(new Vector3Int(-1, 0, 0));
-		worldData.GenerateChunk(new Vector3Int(-1, 0, -1));
-		worldData.GenerateChunk(new Vector3Int(-1, -1, 0));
-		worldData.GenerateChunk(new Vector3Int(-1, -1, -1));
-
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(0, 0, 0)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(0, 0, -1)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(0, -1, 0)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(0, -1, -1)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(-1, 0, 0)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(-1, 0, -1)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(-1, -1, 0)));
-		worldRenderer.RenderChunk(worldData.GetChunkData(new Vector3Int(-1, -1, -1)));
+		for (int x = -1; x < 1; x++) {
+			for (int y = -1; y < 1; y++) {
+				for (int z = -1; z < 1; z++) {
+					Vector3Int pos = new Vector3Int(x, y, z);
+					worldData.chunks[pos] = new ChunkData(worldData, pos);
+					worldRenderer.RenderChunk(worldData.chunks[pos]);
+				}
+			}
+		}
 	}
 }
