@@ -27,18 +27,9 @@ public class WorldData {
 		public BlockIndexer(WorldData worldData) : base(worldData) {}
 
 		protected override BlockData Get(Vector3Int blockPos) {
-			Vector3Int chunkPos = Vector3Int.zero;
-			Vector3Int posInChunk = Vector3Int.zero;
-			for(int i = 0; i < 3; i++) {
-				chunkPos[i] = blockPos[i] / obj.chunkSize[i];
-				posInChunk[i] = blockPos[i] % obj.chunkSize[i];
-				if (blockPos[i] < 0 && posInChunk[i] != 0) {
-					chunkPos[i] -= 1;
-					posInChunk[i] += obj.chunkSize[i];
-				}
-			}
-
+			Vector3Int chunkPos = RDGrid.ToChunkPos(blockPos);
 			if (obj.data.ContainsKey(chunkPos)) {
+				Vector3Int posInChunk = RDGrid.ToPosInChunk(blockPos);
 				return obj.data[chunkPos].blocks[posInChunk];
 			}
 
@@ -46,18 +37,10 @@ public class WorldData {
 		}
 
 		protected override void Set(Vector3Int blockPos, BlockData blockData) {
-			Vector3Int chunkPos = Vector3Int.zero;
-			Vector3Int posInChunk = Vector3Int.zero;
-			for(int i = 0; i < 3; i++) {
-				chunkPos[i] = blockPos[i] / obj.chunkSize[i];
-				posInChunk[i] = blockPos[i] % obj.chunkSize[i];
-				if (blockPos[i] < 0 && posInChunk[i] != 0) {
-					chunkPos[i] -= 1;
-					posInChunk[i] += obj.chunkSize[i];
-				}
-			}
+			Vector3Int chunkPos = RDGrid.ToChunkPos(blockPos);
 
 			if (obj.data.ContainsKey(chunkPos)) {
+				Vector3Int posInChunk = RDGrid.ToPosInChunk(blockPos);
 				obj.data[chunkPos].blocks[posInChunk] = blockData;
 				obj.OnBlockDataChanged?.Invoke(blockPos);
 			}
@@ -68,7 +51,6 @@ public class WorldData {
 
 	// data
 	private readonly Dictionary<Vector3Int, ChunkData> data = new Dictionary<Vector3Int, ChunkData>();
-	public readonly Vector3Int chunkSize;
 
 	// indexers
 	public readonly ChunkIndexer chunks;
@@ -80,8 +62,7 @@ public class WorldData {
 	public delegate void ChunkDataAdded(Vector3Int chunkPos);
 	public event ChunkDataAdded OnChunkDataAdded;
 
-	public WorldData(Vector3Int chunkSize) {
-		this.chunkSize = chunkSize;
+	public WorldData() {
 		this.chunks = new ChunkIndexer(this);
 		this.blocks = new BlockIndexer(this);
 	}

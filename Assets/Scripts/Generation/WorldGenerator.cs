@@ -20,15 +20,16 @@ public class WorldGenerator : MonoBehaviour {
 	private void GenerateChunk(Vector3Int chunkPos) {
 		Debug.Log("Generating: " + chunkPos);
 
-		BlockData[,,] blocks = new BlockData[worldData.chunkSize.x, worldData.chunkSize.y, worldData.chunkSize.z];
-		for(int x = 0; x < worldData.chunkSize.x; x++) {
-			for(int y = 0; y < worldData.chunkSize.y; y++) {
-				for(int z = 0; z < worldData.chunkSize.z; z++) {
-					blocks[x, y, z] = new BlockData(chunkPos.y * worldData.chunkSize.y + y <= 0);
+		BlockData[,,] blocks = new BlockData[RDGrid.chunkSize.x, RDGrid.chunkSize.y, RDGrid.chunkSize.z];
+		for(int x = 0; x < RDGrid.chunkSize.x; x++) {
+			for(int y = 0; y < RDGrid.chunkSize.y; y++) {
+				for(int z = 0; z < RDGrid.chunkSize.z; z++) {
+					Vector3Int posInChunk = new Vector3Int(x, y, z);
+					blocks[posInChunk.x, posInChunk.y, posInChunk.z] = new BlockData(RDGrid.FromChunkPos(chunkPos, posInChunk).y <= 0);
 				}
 			}
 		}
-		GameController.instance.worldData.chunks[chunkPos] = new ChunkData(worldData, chunkPos, blocks);
+		worldData.chunks[chunkPos] = new ChunkData(chunkPos, blocks);
 	}
 
 	private void FixedUpdate() {

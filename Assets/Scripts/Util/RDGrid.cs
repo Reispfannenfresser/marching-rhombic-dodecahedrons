@@ -1,6 +1,42 @@
 using UnityEngine;
 
 static class RDGrid {
+	public static readonly Vector3Int chunkSize = new Vector3Int(10, 10, 10);
+
+	public static Vector3Int ToChunkPos(Vector3Int gridPos) {
+		Vector3Int chunkPos = Vector3Int.zero;
+		Vector3Int posInChunk = Vector3Int.zero;
+		for(int i = 0; i < 3; i++) {
+			chunkPos[i] = gridPos[i] / chunkSize[i];
+			posInChunk[i] = gridPos[i] % chunkSize[i];
+			if (gridPos[i] < 0 && posInChunk[i] != 0) {
+				chunkPos[i] -= 1;
+			}
+		}
+
+		return chunkPos;
+	}
+
+	public static Vector3Int ToPosInChunk(Vector3Int gridPos) {
+		Vector3Int posInChunk = Vector3Int.zero;
+		for(int i = 0; i < 3; i++) {
+			posInChunk[i] = gridPos[i] % chunkSize[i];
+			if (gridPos[i] < 0 && posInChunk[i] != 0) {
+				posInChunk[i] += chunkSize[i];
+			}
+		}
+
+		return posInChunk;
+	}
+
+	public static Vector3Int FromChunkPos(Vector3Int chunkPos) {
+		return new Vector3Int(chunkPos.x * chunkSize.x, chunkPos.y * chunkSize.y, chunkPos.z * chunkSize.z);
+	}
+
+	public static Vector3Int FromChunkPos(Vector3Int chunkPos, Vector3Int posInChunk) {
+		return new Vector3Int(chunkPos.x * chunkSize.x, chunkPos.y * chunkSize.y, chunkPos.z * chunkSize.z) + posInChunk;
+	}
+
 	public static Vector3 ToLocal(Vector3Int gridPos) {
 		return gridPos.x * new Vector3(1, 0, -1) + gridPos.y * new Vector3(1, 1, 0) + gridPos.z * new Vector3(1, 0, 1);
 	}

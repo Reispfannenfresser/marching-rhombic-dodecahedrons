@@ -19,15 +19,15 @@ public class ChunkRenderer : MonoBehaviour {
 	private MeshFilter meshFilter = null;
 	public bool dirty {
 		get {
-			return dirtyRenderers.Contains(chunkData.chunkPosition);
+			return dirtyRenderers.Contains(chunkData.chunkPos);
 		}
 		set {
 			if (dirty && !value) {
 				mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
-				dirtyRenderers.Remove(chunkData.chunkPosition);
+				dirtyRenderers.Remove(chunkData.chunkPos);
 			}
 			if (!dirty && value) {
-				dirtyRenderers.Add(chunkData.chunkPosition);
+				dirtyRenderers.Add(chunkData.chunkPos);
 			}
 		}
 	}
@@ -40,18 +40,18 @@ public class ChunkRenderer : MonoBehaviour {
 		set {
 			if (chunkData != null) {
 				mesh.Clear();
-				renderers.Remove(chunkData.position);
+				renderers.Remove(chunkData.chunkPos);
 
-				if (dirtyRenderers.Contains(chunkData.position)) {
-					dirtyRenderers.Remove(chunkData.position);
+				if (dirtyRenderers.Contains(chunkData.chunkPos)) {
+					dirtyRenderers.Remove(chunkData.chunkPos);
 				}
 			}
 
 			_chunkData = value;
 
 			if (chunkData != null) {
-				transform.position = RDGrid.ToLocal(chunkData.position);
-				renderers.Add(chunkData.chunkPosition, this);
+				transform.position = RDGrid.ToLocal(RDGrid.FromChunkPos(chunkData.chunkPos));
+				renderers.Add(chunkData.chunkPos, this);
 				dirty = true;
 			}
 

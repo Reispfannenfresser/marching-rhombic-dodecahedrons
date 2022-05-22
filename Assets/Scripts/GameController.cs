@@ -6,7 +6,7 @@ class GameController : MonoBehaviour {
 	[SerializeField]
 	private Vector3Int size = Vector3Int.one;
 
-	public readonly WorldData worldData = new WorldData(new Vector3Int(10, 10, 10));
+	public readonly WorldData worldData = new WorldData();
 	public WorldRenderer worldRenderer {get; private set;} = null;
 	public WorldGenerator worldGenerator {get; private set;} = null;
 	public static GameController instance = null;

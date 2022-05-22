@@ -29,7 +29,7 @@ public class WorldRenderer : MonoBehaviour {
 	}
 
 	private void CreateRenderer(ChunkData chunkData) {
-		Debug.Log("Creating Renderer for: " + chunkData.chunkPosition);
+		Debug.Log("Creating Renderer for: " + chunkData.chunkPos);
 
 		GameObject newGameObject = Instantiate(chunkRenderer, Vector3.zero, Quaternion.identity, transform);
 		ChunkRenderer newChunkRenderer = newGameObject.GetComponent<ChunkRenderer>();
@@ -50,35 +50,18 @@ public class WorldRenderer : MonoBehaviour {
 		}
 	}
 
-	private void OnBlockDataChanged(Vector3Int position) {
-		Vector3Int chunkPos = Vector3Int.zero;
-		Vector3Int blockPos = Vector3Int.zero;
-		for(int i = 0; i < 3; i++) {
-			chunkPos[i] = position[i] / worldData.chunkSize[i];
-			blockPos[i] = position[i] % worldData.chunkSize[i];
-			if (position[i] < 0 && blockPos[i] != 0) {
-				chunkPos[i] -= 1;
-				blockPos[i] +=worldData.chunkSize[i];
-			}
-		}
+	private void OnBlockDataChanged(Vector3Int blockPos) {
+		Vector3Int chunkPos = RDGrid.ToChunkPos(blockPos);
 
 		if (ChunkRenderer.renderers.ContainsKey(chunkPos)) {
 			ChunkRenderer.renderers[chunkPos].dirty = true;
 		}
 
 		foreach (FaceDirection dir in Enum.GetValues(typeof(FaceDirection))) {
-			Vector3Int neighborPos = position + dir.GetVector();
-			for(int i = 0; i < 3; i++) {
-				chunkPos[i] = neighborPos[i] / worldData.chunkSize[i];
-				blockPos[i] = neighborPos[i] % worldData.chunkSize[i];
-				if (neighborPos[i] < 0 && blockPos[i] != 0) {
-					neighborPos[i] -= 1;
-					neighborPos[i] += worldData.chunkSize[i];
-				}
-			}
+			Vector3Int neighborChunkPos = RDGrid.ToChunkPos(blockPos + dir.GetVector());
 
-			if (ChunkRenderer.renderers.ContainsKey(chunkPos)) {
-				ChunkRenderer.renderers[chunkPos].dirty = true;
+			if (ChunkRenderer.renderers.ContainsKey(neighborChunkPos)) {
+				ChunkRenderer.renderers[neighborChunkPos].dirty = true;
 			}
 		}
 	}
