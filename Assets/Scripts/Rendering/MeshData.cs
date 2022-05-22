@@ -1,6 +1,6 @@
 using UnityEngine;
 
-class MeshData {
+public static class MeshData {
 	public static Vector3[][] vertices = {
 		new Vector3[4] {
 			//UL

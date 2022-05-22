@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class WorldData {
@@ -15,10 +16,10 @@ public class WorldData {
 
 		protected override void Set(Vector3Int chunkPos, ChunkData chunkData) {
 			if (obj.data.ContainsKey(chunkPos)) {
-				Debug.LogError("Attempted to override an already existing chunk!");
-				return;
+				throw new ArgumentException("An item with the same key has already been added. Key: " + chunkPos);
 			}
 			obj.data.Add(chunkPos, chunkData);
+			obj.OnChunkDataAdded?.Invoke(chunkPos);
 		}
 	}
 
@@ -58,7 +59,7 @@ public class WorldData {
 
 			if (obj.data.ContainsKey(chunkPos)) {
 				obj.data[chunkPos].blocks[posInChunk] = blockData;
-				obj.OnBlockDataChanged(blockPos, blockData);
+				obj.OnBlockDataChanged?.Invoke(blockPos);
 			}
 
 			//TODO remember data of blocks that would have ended up outside of the world
@@ -74,8 +75,10 @@ public class WorldData {
 	public readonly BlockIndexer blocks;
 
 	// events
-	public delegate void BlockChanged(Vector3Int blockPos, BlockData newBlockData);
-	public event BlockChanged OnBlockDataChanged;
+	public delegate void BlockDataChanged(Vector3Int blockPos);
+	public event BlockDataChanged OnBlockDataChanged;
+	public delegate void ChunkDataAdded(Vector3Int chunkPos);
+	public event ChunkDataAdded OnChunkDataAdded;
 
 	public WorldData(Vector3Int chunkSize) {
 		this.chunkSize = chunkSize;

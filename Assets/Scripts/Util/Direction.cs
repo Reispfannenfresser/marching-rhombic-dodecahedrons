@@ -27,6 +27,22 @@ public enum CornerDirection : int {
 	D
 }
 
+[System.Serializable]
+public enum ChunkNeighborDirection : int {
+	U,
+	L,
+	F,
+	R,
+	B,
+	D,
+	UL,
+	DR,
+	UF,
+	DB,
+	LF,
+	RB
+}
+
 public static class FaceDirectionExtensions {
 	private static Vector3Int[] vectors = {
 		// UL
@@ -77,6 +93,39 @@ public static class CornerDirectionExtensions {
 	};
 
 	public static Vector3Int GetVector(this CornerDirection dir) {
+		return vectors[(int) dir];
+	}
+}
+
+public static class ChunkNeighborDirectionExtensions {
+	private static Vector3Int[] vectors = {
+		// U
+		new Vector3Int(0, 1, 0),
+		// L
+		new Vector3Int(-1, 0, 0),
+		// F
+		new Vector3Int(0, 0, 1),
+		// R
+		new Vector3Int(1, 0, 0),
+		// B
+		new Vector3Int(0, 0, -1),
+		// D
+		new Vector3Int(0, -1, 0),
+		// UR
+		new Vector3Int(1, 1, 0),
+		// DL
+		new Vector3Int(-1, -1, 0),
+		// UF
+		new Vector3Int(0, 1, 1),
+		// DB
+		new Vector3Int(0, -1, -1),
+		// LF
+		new Vector3Int(1, 0, 1),
+		// RB
+		new Vector3Int(-1, 0, -1),
+	};
+
+	public static Vector3Int GetVector(this ChunkNeighborDirection dir) {
 		return vectors[(int) dir];
 	}
 }

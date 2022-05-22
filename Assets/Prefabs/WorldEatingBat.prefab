@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815066239234850941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 25, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60,13 +60,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1815066239234850941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 069567e28e98df0128acc636ce160e71, type: 3}
+  m_Script: {fileID: 11500000, guid: 3db92d2e6983e8f3d860d0b8b2599926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eating: 1
   smoothTime: 1
   speed: 10
-  cooldown: 0.5
+  cooldown: 2
 --- !u!23 &1815066239234850939
 MeshRenderer:
   m_ObjectHideFlags: 0

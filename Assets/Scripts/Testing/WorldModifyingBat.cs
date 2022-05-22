@@ -52,7 +52,7 @@ class WorldModifyingBat : MonoBehaviour{
 			return;
 		}
 		if (blockData.solid == eating) {
-			GameController.instance.worldData.blocks[gridPos] = new BlockData(gridPos, !eating);
+			GameController.instance.worldData.blocks[gridPos] = new BlockData(!eating);
 		}
 	}
 }

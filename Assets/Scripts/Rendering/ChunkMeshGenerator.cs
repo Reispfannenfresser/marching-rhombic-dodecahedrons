@@ -4,6 +4,8 @@ using System;
 
 public static class ChunkMeshGenerator {
 	public static Mesh GenerateMesh(ChunkData chunkData) {
+		Debug.Log("Updating Mesh of: " + chunkData.chunkPosition);
+
 		Mesh mesh = new Mesh();
 
 		List<Vector3> vertices = new List<Vector3>();
