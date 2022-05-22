@@ -22,9 +22,9 @@ class GameController : MonoBehaviour {
 			instance = this;
 		}
 
-		for (int x = 0; x < size.x; x++) {
-			for (int y = 0; y < size.y; y++) {
-				for (int z = 0; z < size.z; z++) {
+		for (int x = -size.x; x < size.x; x++) {
+			for (int y = -size.y; y < size.y; y++) {
+				for (int z = -size.z; z < size.z; z++) {
 					Vector3Int pos = new Vector3Int(x, y, z);
 					worldGenerator.MarkForGeneration(pos);
 					worldRenderer.MarkForRendering(pos);

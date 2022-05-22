@@ -24,7 +24,7 @@ public class WorldGenerator : MonoBehaviour {
 		for(int x = 0; x < worldData.chunkSize.x; x++) {
 			for(int y = 0; y < worldData.chunkSize.y; y++) {
 				for(int z = 0; z < worldData.chunkSize.z; z++) {
-					blocks[x, y, z] = new BlockData(true);
+					blocks[x, y, z] = new BlockData(chunkPos.y * worldData.chunkSize.y + y <= 0);
 				}
 			}
 		}
