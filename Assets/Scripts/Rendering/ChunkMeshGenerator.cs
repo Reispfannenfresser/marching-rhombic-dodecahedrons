@@ -20,7 +20,7 @@ public static class ChunkMeshGenerator {
 						int offset = vertices.Count;
 						foreach (FaceDirection direction in Enum.GetValues(typeof(FaceDirection))) {
 							BlockData neighbor = chunkData.blocks[blockPos + direction.GetVector()];
-							if (neighbor != null && !neighbor.solid) {
+							if (neighbor == null || !neighbor.solid) {
 								int triangleIndexOffset = vertices.Count;
 								foreach(Vector3 vertex in MeshData.vertices[(int) direction]) {
 									vertices.Add(vertex + RDGrid.ToLocal(blockPos));
