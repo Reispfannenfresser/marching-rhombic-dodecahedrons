@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public static class ChunkMeshGenerator {
 	public static Mesh GenerateMesh(ChunkData chunkData) {
-		Debug.Log("Updating Mesh of: " + chunkData.chunkPos);
-
 		Mesh mesh = new Mesh();
 
 		List<Vector3> vertices = new List<Vector3>();
@@ -16,20 +15,25 @@ public static class ChunkMeshGenerator {
 			for(int y = 0; y < RDGrid.chunkSize.y; y++) {
 				for(int z = 0; z < RDGrid.chunkSize.z; z++) {
 					Vector3Int blockPos = new Vector3Int(x, y, z);
-					if (chunkData.blocks[blockPos].solid) {
-						int offset = vertices.Count;
-						foreach (FaceDirection direction in Enum.GetValues(typeof(FaceDirection))) {
-							BlockData neighbor = chunkData.blocks[blockPos + direction.GetVector()];
-							if (neighbor == null || !neighbor.solid) {
-								int triangleIndexOffset = vertices.Count;
-								foreach(Vector3 vertex in MeshData.vertices[(int) direction]) {
-									vertices.Add(vertex + RDGrid.ToLocal(blockPos));
-									normals.Add(MeshData.normals[(int) direction]);
-								}
-								foreach(int triangleIndex in MeshData.triangles) {
-									triangles.Add(triangleIndex + triangleIndexOffset);
-								}
+					BlockModel model = BlockModels.GetBlockModel(chunkData.blocks[blockPos].block.id);
+					int offset = vertices.Count;
+
+					foreach (BlockModelFace face in model.blockfaces) {
+						if (face.culledAs.HasValue) {
+							BlockData neighbor = chunkData.blocks[blockPos + face.culledAs.Value.GetVector()];
+							if (neighbor != null && BlockModels.GetBlockModel(neighbor.block.id).Culls(face.culledAs.Value)) {
+								continue;
 							}
+						}
+
+						int triangleIndexOffset = vertices.Count;
+
+						foreach(VertexInformation vertex in face.faceInformation.vertexInformation) {
+							vertices.Add(vertex.position + RDGrid.ToLocal(blockPos));
+							normals.Add(face.faceInformation.normal);
+						}
+						foreach(int triangleIndex in face.faceInformation.triangles) {
+							triangles.Add(triangleIndex + triangleIndexOffset);
 						}
 					}
 				}

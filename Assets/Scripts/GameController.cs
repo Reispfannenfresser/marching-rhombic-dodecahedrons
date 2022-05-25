@@ -12,6 +12,8 @@ class GameController : MonoBehaviour {
 	public static GameController instance = null;
 
 	void Awake() {
+		Blocks.LoadBlocks();
+
 		worldRenderer = GetComponent<WorldRenderer>();
 		worldGenerator = GetComponent<WorldGenerator>();
 
@@ -27,7 +29,7 @@ class GameController : MonoBehaviour {
 				for (int z = -size.z; z < size.z; z++) {
 					Vector3Int pos = new Vector3Int(x, y, z);
 					worldGenerator.MarkForGeneration(pos);
-					worldRenderer.MarkForRendering(pos);
+					worldRenderer.RenderChunk(pos);
 				}
 			}
 		}

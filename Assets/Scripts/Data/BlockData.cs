@@ -1,9 +1,11 @@
 using UnityEngine;
 
 public class BlockData {
-	public readonly bool solid;
+	public readonly Vector3Int pos;
+	public readonly Block block;
 
-	public BlockData(bool solid) {
-		this.solid = solid;
+	public BlockData(Vector3Int pos, Block block) {
+		this.pos = pos;
+		this.block = block;
 	}
 }

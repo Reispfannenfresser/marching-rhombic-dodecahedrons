@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class WorldGenerator : MonoBehaviour {
 	[SerializeField]
-	private float chunkGenerationInterval = 0.1f;
+	private float chunkGenerationInterval = 0.05f;
 	private float currentChunkGenerationCooldown = 0f;
 	private ISet<Vector3Int?> toGenerate = new HashSet<Vector3Int?>();
 
@@ -19,6 +19,11 @@ public class WorldGenerator : MonoBehaviour {
 		toGenerate.Add(chunkPos);
 	}
 
+	private Block GetBlock(Vector3Int gridPos) {
+		Vector3 localPos = RDGrid.ToLocal(gridPos);
+		return (localPos.y <= heightMap[localPos.x, localPos.z] ? Blocks.GetBlock("ground") : Blocks.GetBlock("air"));
+	}
+
 	private void GenerateChunk(Vector3Int chunkPos) {
 		Debug.Log("Generating: " + chunkPos);
 
@@ -27,8 +32,8 @@ public class WorldGenerator : MonoBehaviour {
 			for(int y = 0; y < RDGrid.chunkSize.y; y++) {
 				for(int z = 0; z < RDGrid.chunkSize.z; z++) {
 					Vector3Int posInChunk = new Vector3Int(x, y, z);
-					Vector3 localPos = RDGrid.ToLocal(RDGrid.FromChunkPos(chunkPos, posInChunk));
-					blocks[posInChunk.x, posInChunk.y, posInChunk.z] = new BlockData(localPos.y <= heightMap[localPos.x, localPos.z]);
+					Vector3Int gridPos = RDGrid.FromChunkPos(chunkPos, posInChunk);
+					blocks[posInChunk.x, posInChunk.y, posInChunk.z] = new BlockData(gridPos, GetBlock(gridPos));
 				}
 			}
 		}
@@ -45,9 +50,8 @@ public class WorldGenerator : MonoBehaviour {
 			if (enumerator.Current.HasValue) {
 				if (worldData.chunks[enumerator.Current.Value] == null) {
 					GenerateChunk(enumerator.Current.Value);
-				} else {
-					toGenerate.Remove(enumerator.Current.Value);
 				}
+				toGenerate.Remove(enumerator.Current.Value);
 			}
 		}
 	}

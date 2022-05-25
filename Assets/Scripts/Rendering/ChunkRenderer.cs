@@ -4,57 +4,17 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
 public class ChunkRenderer : MonoBehaviour {
-	public static ISet<Vector3Int?> dirtyRenderers = new HashSet<Vector3Int?>();
-	public static Dictionary<Vector3Int?, ChunkRenderer> renderers = new Dictionary<Vector3Int?, ChunkRenderer>();
-
-	private Mesh mesh {
-		get {
-			return meshFilter.mesh;
-		}
-		set {
-			meshFilter.mesh = value;
-		}
-	}
-
 	private MeshFilter meshFilter = null;
-	public bool dirty {
+	private Vector3Int _chunkPos = Vector3Int.zero;
+	public Vector3Int chunkPos {
 		get {
-			return dirtyRenderers.Contains(chunkData.chunkPos);
+			return _chunkPos;
 		}
 		set {
-			if (dirty && !value) {
-				mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
-				dirtyRenderers.Remove(chunkData.chunkPos);
-			}
-			if (!dirty && value) {
-				dirtyRenderers.Add(chunkData.chunkPos);
-			}
-		}
-	}
+			_chunkPos = value;
 
-	private ChunkData _chunkData = null;
-	public ChunkData chunkData {
-		get {
-			return _chunkData;
-		}
-		set {
-			if (chunkData != null) {
-				mesh.Clear();
-				renderers.Remove(chunkData.chunkPos);
-
-				if (dirtyRenderers.Contains(chunkData.chunkPos)) {
-					dirtyRenderers.Remove(chunkData.chunkPos);
-				}
-			}
-
-			_chunkData = value;
-
-			if (chunkData != null) {
-				transform.position = RDGrid.ToLocal(RDGrid.FromChunkPos(chunkData.chunkPos));
-				renderers.Add(chunkData.chunkPos, this);
-				dirty = true;
-			}
-
+			transform.position = RDGrid.ToLocal(RDGrid.FromChunkPos(chunkPos));
+			UpdateMesh();
 		}
 	}
 
@@ -62,7 +22,15 @@ public class ChunkRenderer : MonoBehaviour {
 		meshFilter = GetComponent<MeshFilter>();
 	}
 
-	private void OnDestroy() {
-		chunkData = null;
+	public void UpdateMesh() {
+		Debug.Log("Updating Mesh of: " + chunkPos);
+
+		ChunkData chunkData = GameController.instance.worldData.chunks[chunkPos];
+		if (chunkData != null) {
+			meshFilter.mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
+		}
+		else {
+			meshFilter.mesh.Clear();
+		}
 	}
 }

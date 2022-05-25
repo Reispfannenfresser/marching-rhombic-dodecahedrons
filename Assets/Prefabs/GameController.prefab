@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207b42441c03a12019a269e5b52cb307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshUpdateInterval: 0.1
-  rendererCreationInterval: 0.5
   chunkRenderer: {fileID: 2939302300746881922, guid: 2e88ad2c2a4accc4c8ab7bbc0b96b07f, type: 3}
 --- !u!114 &7455180820496161789
 MonoBehaviour:
@@ -61,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfa14ad563bfff26a7d4b324619d127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkGenerationInterval: 0.5
+  chunkGenerationInterval: 0.05
 --- !u!114 &5605659710032129809
 MonoBehaviour:
   m_ObjectHideFlags: 0

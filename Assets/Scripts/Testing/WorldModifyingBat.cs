@@ -51,8 +51,8 @@ class WorldModifyingBat : MonoBehaviour{
 			//Destroy(gameObject);
 			return;
 		}
-		if (blockData.solid == eating) {
-			GameController.instance.worldData.blocks[gridPos] = new BlockData(!eating);
+		if (blockData.block == Blocks.GetBlock("ground") == eating) {
+			GameController.instance.worldData.blocks[gridPos] = new BlockData(gridPos, eating ? Blocks.GetBlock("air") : Blocks.GetBlock("ground"));
 		}
 	}
 }
