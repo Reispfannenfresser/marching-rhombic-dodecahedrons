@@ -1,17 +1,19 @@
 using UnityEngine;
 
-public class Combined : ValueMap {
-	protected readonly ValueMap[] maps;
+namespace ValueMaps {
+	public class Combined2D : ValueMap2D {
+		protected readonly ValueMap2D[] maps;
 
-	public Combined(ValueMap[] maps) {
-		this.maps = maps;
-	}
-
-	protected override float GetValue(float x, float y) {
-		float value = 0;
-		foreach(ValueMap map in maps) {
-			value += map[x, y];
+		public Combined2D(ValueMap2D[] maps) {
+			this.maps = maps;
 		}
-		return value;
+
+		protected override float GetValue(float x, float y) {
+			float value = 0;
+			foreach(ValueMap2D map in maps) {
+				value += map[x, y];
+			}
+			return value;
+		}
 	}
 }

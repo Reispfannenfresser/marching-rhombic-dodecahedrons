@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using ValueMaps;
 
 public class WorldGenerator : MonoBehaviour {
 	[SerializeField]
@@ -7,7 +8,7 @@ public class WorldGenerator : MonoBehaviour {
 	private float currentChunkGenerationCooldown = 0f;
 	private ISet<Vector3Int?> toGenerate = new HashSet<Vector3Int?>();
 
-	private ValueMap heightMap = new Combined(new ValueMap[] {new Transformed(new PerlinNoise(new System.Random(0)), 0.05f, 0f, 5), new Transformed(new PerlinNoise(new System.Random(0)), 0.01f, 0.7f, 20)});
+	private ValueMap2D heightMap = new Combined2D(new ValueMap2D[] {new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.05f, 0f, 5), new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.01f, 0.7f, 20)});
 
 	private WorldData worldData {
 		get {
