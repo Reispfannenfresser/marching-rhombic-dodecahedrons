@@ -71,8 +71,39 @@ public static class FaceDirectionExtensions {
 		new Vector3Int(1, -1, 0),
 	};
 
+	private static FaceDirection[] opposites = {
+		// UL
+		FaceDirection.DR,
+		// UF
+		FaceDirection.DB,
+		// UR
+		FaceDirection.DL,
+		// UB
+		FaceDirection.DF,
+		// LF
+		FaceDirection.RB,
+		// FR
+		FaceDirection.BL,
+		// RB
+		FaceDirection.LF,
+		// BL
+		FaceDirection.FR,
+		// DL
+		FaceDirection.UR,
+		// DF
+		FaceDirection.UB,
+		// DR
+		FaceDirection.UL,
+		// DB
+		FaceDirection.UF
+	};
+
 	public static Vector3Int GetVector(this FaceDirection dir) {
 		return vectors[(int) dir];
+	}
+
+	public static FaceDirection GetOpposite(this FaceDirection dir) {
+		return opposites[(int) dir];
 	}
 }
 
@@ -92,8 +123,21 @@ public static class CornerDirectionExtensions {
 		new Vector3Int(1, -2, 1)
 	};
 
+	private static CornerDirection[] opposites = {
+		CornerDirection.D,
+		CornerDirection.R,
+		CornerDirection.B,
+		CornerDirection.L,
+		CornerDirection.F,
+		CornerDirection.U
+	};
+
 	public static Vector3Int GetVector(this CornerDirection dir) {
 		return vectors[(int) dir];
+	}
+
+	public static CornerDirection GetOpposite(this CornerDirection dir) {
+		return opposites[(int) dir];
 	}
 }
 
@@ -125,7 +169,38 @@ public static class ChunkNeighborDirectionExtensions {
 		new Vector3Int(-1, 0, -1),
 	};
 
+	private static ChunkNeighborDirection[] opposites = {
+		// U,
+		ChunkNeighborDirection.D,
+		// L,
+		ChunkNeighborDirection.R,
+		// F,
+		ChunkNeighborDirection.B,
+		// R,
+		ChunkNeighborDirection.L,
+		// B,
+		ChunkNeighborDirection.F,
+		// D,
+		ChunkNeighborDirection.U,
+		// UL,
+		ChunkNeighborDirection.DR,
+		// DR,
+		ChunkNeighborDirection.UL,
+		// UF,
+		ChunkNeighborDirection.DB,
+		// DB,
+		ChunkNeighborDirection.UF,
+		// LF,
+		ChunkNeighborDirection.RB,
+		// RB
+		ChunkNeighborDirection.LF
+	};
+
 	public static Vector3Int GetVector(this ChunkNeighborDirection dir) {
 		return vectors[(int) dir];
+	}
+
+	public static ChunkNeighborDirection GetOpposite(this ChunkNeighborDirection dir) {
+		return opposites[(int) dir];
 	}
 }

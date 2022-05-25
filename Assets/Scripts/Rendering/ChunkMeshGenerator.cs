@@ -21,7 +21,7 @@ public static class ChunkMeshGenerator {
 					foreach (BlockModelFace face in model.blockfaces) {
 						if (face.culledAs.HasValue) {
 							BlockData neighbor = chunkData.blocks[blockPos + face.culledAs.Value.GetVector()];
-							if (neighbor != null && BlockModels.GetBlockModel(neighbor.block.id).Culls(face.culledAs.Value)) {
+							if (neighbor != null && BlockModels.GetBlockModel(neighbor.block.id).Culls(face.culledAs.Value.GetOpposite())) {
 								continue;
 							}
 						}
