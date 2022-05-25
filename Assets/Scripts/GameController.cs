@@ -25,8 +25,8 @@ class GameController : MonoBehaviour {
 		}
 
 		for (int x = -size.x; x < size.x; x++) {
-			for (int y = -size.y; y < size.y; y++) {
-				for (int z = -size.z; z < size.z; z++) {
+			for (int z = -size.z; z < size.z; z++) {
+				for (int y = -size.y; y < size.y; y++) {
 					Vector3Int pos = new Vector3Int(x, y, z);
 					worldGenerator.MarkForGeneration(pos);
 					worldRenderer.RenderChunk(pos);
