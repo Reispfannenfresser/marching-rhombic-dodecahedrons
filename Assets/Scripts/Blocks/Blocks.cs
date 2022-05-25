@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class Blocks {
 	private static readonly Dictionary<string, Block> blocks = new Dictionary<string, Block>();
-	private static readonly Block ERROR = new Block("error");
 
 	public static void LoadBlocks() {
 		string path = @"Data/Blocks";
@@ -16,7 +15,7 @@ public static class Blocks {
 
 	public static Block GetBlock(string id) {
 		if (!blocks.ContainsKey(id)) {
-			blocks.Add(id, ERROR);
+			blocks.Add(id, new Block(id));
 		}
 
 		return blocks[id];
