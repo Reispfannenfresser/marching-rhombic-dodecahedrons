@@ -7,7 +7,7 @@ public class WorldGenerator : MonoBehaviour {
 	private float currentChunkGenerationCooldown = 0f;
 	private ISet<Vector3Int?> toGenerate = new HashSet<Vector3Int?>();
 
-	private ValueMap heightMap = new Transformed(new PerlinNoise(new System.Random(0)), Vector3.zero, new Vector3(0.03f, 0.03f, 20f));
+	private ValueMap heightMap = new Combined(new ValueMap[] {new Transformed(new PerlinNoise(new System.Random(0)), 0.05f, 0f, 5), new Transformed(new PerlinNoise(new System.Random(0)), 0.01f, 0.7f, 20)});
 
 	private WorldData worldData {
 		get {
