@@ -3,32 +3,26 @@ using System;
 using System.Collections.Generic;
 
 namespace ValueMaps {
-	public class PerlinNoise2D : ValueMap2D {
-		protected readonly System.Random random;
-		private Dictionary<Vector2Int, Vector2> vectors = new Dictionary<Vector2Int, Vector2>();
+	public class PerlinNoise2D : ValueMap<float, float> {
+		protected readonly ValueMap<int, Vector2> vectors;
 
-		private RandomFloatAxis xAxis;
-		private RandomFloatAxis yAxis;
-
-		public PerlinNoise2D(System.Random seedGenerator) {
-			xAxis = new RandomFloatAxis(seedGenerator);
-			yAxis = new RandomFloatAxis(seedGenerator);
+		public PerlinNoise2D(System.Random seedGenerator) : base(2) {
+			vectors = new Noise2D<Vector2>(seedGenerator, (random) => {
+				float angle = (float) random.NextDouble();
+				return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+			});
 		}
 
 		private Vector2 GetVector(Vector2Int gridPos) {
-			if (!vectors.ContainsKey(gridPos)) {
-				float angle = (xAxis[gridPos.x] + yAxis[gridPos.y]) * 2 * Mathf.PI;
-				vectors.Add(gridPos, new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
-			}
-			return vectors[gridPos];
+			return vectors[new int[] {gridPos.x, gridPos.y}];
 		}
 
 		private float Fade(float value) {
 			return 6 * value * value * value * value * value - 15 * value * value * value * value + 10 * value * value * value;
 		}
 
-		protected override float GetValue(float x, float y) {
-			Vector2 pos = new Vector2(x, y);
+		protected override float GetValue(float[] indices) {
+			Vector2 pos = new Vector2(indices[0], indices[1]);
 			Vector2Int gridPos = new Vector2Int((int) Mathf.Floor(pos.x), (int) Mathf.Floor(pos.y));
 
 			Vector2Int[] corners = {

@@ -1,12 +1,21 @@
-using UnityEngine;
+using System;
 
 namespace ValueMaps {
-	public abstract class ValueMap2D {
-		protected abstract float GetValue(float x, float y);
+	public abstract class ValueMap<T, U> {
+		protected readonly int dimensions;
 
-		public float this[float x, float y] {
+		public ValueMap(int dimensions) {
+			this.dimensions = dimensions;
+		}
+
+		protected abstract U GetValue(T[] indices);
+
+		public U this[T[] indices] {
 			get {
-				return GetValue(x, y);
+				if (indices.Length != dimensions) {
+					throw new ArgumentException("Number of indices doesn't fit dimensions of valuemap.");
+				}
+				return GetValue(indices);
 			}
 		}
 	}

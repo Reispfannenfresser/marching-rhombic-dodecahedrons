@@ -8,7 +8,13 @@ public class WorldGenerator : MonoBehaviour {
 	private float currentChunkGenerationCooldown = 0f;
 	private ISet<Vector3Int?> toGenerate = new HashSet<Vector3Int?>();
 
-	private ValueMap2D heightMap = new Combined2D(new ValueMap2D[] {new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.05f, 0f, 5), new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.01f, 0.7f, 20)});
+	private ValueMap<float, float> heightMap = new Combined<float, float>(2, new ValueMap<float, float>[] {new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.05f, 0f, 5), new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.01f, 0.7f, 20)}, (values) => {
+		float sum = 0;
+		foreach (float value in values) {
+			sum += value;
+		}
+		return sum;
+	});
 
 	private WorldData worldData {
 		get {
@@ -22,7 +28,7 @@ public class WorldGenerator : MonoBehaviour {
 
 	private Block GetBlock(Vector3Int gridPos) {
 		Vector3 localPos = RDGrid.ToLocal(gridPos);
-		return (localPos.y <= heightMap[localPos.x, localPos.z] ? Blocks.GetBlock("ground") : Blocks.GetBlock("air"));
+		return (localPos.y <= heightMap[new float[] {localPos.x, localPos.z}] ? Blocks.GetBlock("ground") : Blocks.GetBlock("air"));
 	}
 
 	private void GenerateChunk(Vector3Int chunkPos) {

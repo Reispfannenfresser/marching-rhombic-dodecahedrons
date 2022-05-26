@@ -1,19 +1,23 @@
 using UnityEngine;
 
 namespace ValueMaps {
-	public class Combined2D : ValueMap2D {
-		protected readonly ValueMap2D[] maps;
+	public class Combined<T, U> : ValueMap<T, U> {
+		public delegate U Combine(U[] values);
 
-		public Combined2D(ValueMap2D[] maps) {
+		protected readonly ValueMap<T, U>[] maps;
+		protected readonly Combine CombineValues;
+
+		public Combined(int dimensions, ValueMap<T, U>[] maps, Combine valueCombiner) : base(dimensions) {
 			this.maps = maps;
+			this.CombineValues = valueCombiner;
 		}
 
-		protected override float GetValue(float x, float y) {
-			float value = 0;
-			foreach(ValueMap2D map in maps) {
-				value += map[x, y];
+		protected override U GetValue(T[] indices) {
+			U[] values = new U[maps.Length];
+			for (int i = 0; i < maps.Length; i++) {
+				values[i] = maps[i][indices];
 			}
-			return value;
+			return CombineValues(values);
 		}
 	}
 }
