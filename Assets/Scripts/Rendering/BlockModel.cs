@@ -31,12 +31,12 @@ public struct FaceInformation {
 [System.Serializable]
 public struct BlockModelFace {
 	public readonly FaceInformation faceInformation;
-	public readonly FaceDirection? culledAs;
+	public readonly FaceDirection[] culledAs;
 
 	[JsonConstructor]
-	public BlockModelFace(FaceInformation faceInformation, FaceDirection? culledAs) {
+	public BlockModelFace(FaceInformation faceInformation, FaceDirection[] culledAs) {
 		this.faceInformation = faceInformation;
-		this.culledAs = culledAs;
+		this.culledAs = (culledAs == null) ? new FaceDirection[0] : culledAs;
 	}
 }
 
@@ -46,7 +46,7 @@ public struct BlockModel {
 	public readonly bool[] culls;
 
 	public bool Culls(FaceDirection dir) {
-		return culls[(int) dir];
+		return culls[(int) dir.GetOpposite()];
 	}
 
 	[JsonConstructor]

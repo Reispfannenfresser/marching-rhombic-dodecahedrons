@@ -26,7 +26,7 @@
 				],
 				"normal" : [-1, 1, 0]
 			},
-			"culledAs" : 0
+			"culledAs" : [0]
 		},
 		{
 			"faceInformation": {
@@ -54,7 +54,7 @@
 				],
 				"normal" : [0, 1, 1]
 			},
-			"culledAs" : 1
+			"culledAs" : [1]
 		},
 		{
 			"faceInformation": {
@@ -82,7 +82,7 @@
 				],
 				"normal" : [1, 1, 0]
 			},
-			"culledAs" : 2
+			"culledAs" : [2]
 		},
 		{
 			"faceInformation": {
@@ -110,7 +110,7 @@
 				],
 				"normal" : [0, 1, -1]
 			},
-			"culledAs" : 3
+			"culledAs" : [3]
 		},
 		{
 			"faceInformation": {
@@ -138,7 +138,7 @@
 				],
 				"normal" : [-1, 0, 1]
 			},
-			"culledAs" : 4
+			"culledAs" : [4]
 		},
 		{
 			"faceInformation": {
@@ -166,7 +166,7 @@
 				],
 				"normal" : [1, 0, 1]
 			},
-			"culledAs" : 5
+			"culledAs" : [5]
 		},
 		{
 			"faceInformation": {
@@ -194,7 +194,7 @@
 				],
 				"normal" : [1, 0, -1]
 			},
-			"culledAs" : 6
+			"culledAs" : [6]
 		},
 		{
 			"faceInformation": {
@@ -222,7 +222,7 @@
 				],
 				"normal" : [-1, 0, -1]
 			},
-			"culledAs" : 7
+			"culledAs" : [7]
 		},
 		{
 			"faceInformation": {
@@ -250,7 +250,7 @@
 				],
 				"normal" : [-1, -1, 0]
 			},
-			"culledAs" : 8
+			"culledAs" : [8]
 		},
 		{
 			"faceInformation": {
@@ -278,7 +278,7 @@
 				],
 				"normal" : [0, -1, 1]
 			},
-			"culledAs" : 9
+			"culledAs" : [9]
 		},
 		{
 			"faceInformation": {
@@ -306,7 +306,7 @@
 				],
 				"normal" : [1, -1, 0]
 			},
-			"culledAs" : 10
+			"culledAs" : [10]
 		},
 		{
 			"faceInformation": {
@@ -334,7 +334,7 @@
 				],
 				"normal" : [0, -1, -1]
 			},
-			"culledAs" : 11
+			"culledAs" : [11]
 		}
 	],
 	"culls" : [

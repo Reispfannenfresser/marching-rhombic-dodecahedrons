@@ -19,11 +19,18 @@ public static class ChunkMeshGenerator {
 					int offset = vertices.Count;
 
 					foreach (BlockModelFace face in model.blockfaces) {
-						if (face.culledAs.HasValue) {
-							BlockData neighbor = chunkData.blocks[blockPos + face.culledAs.Value.GetVector()];
-							if (neighbor != null && BlockModels.GetBlockModel(neighbor.block.id).Culls(face.culledAs.Value.GetOpposite())) {
-								continue;
+						bool culled = true;
+
+						foreach (FaceDirection faceDir in face.culledAs) {
+							BlockData neighbor = chunkData.blocks[blockPos + faceDir.GetVector()];
+							if (neighbor == null || !BlockModels.GetBlockModel(neighbor.block.id).Culls(faceDir)) {
+								culled = false;
+								break;
 							}
+						}
+
+						if (culled) {
+							continue;
 						}
 
 						int triangleIndexOffset = vertices.Count;
