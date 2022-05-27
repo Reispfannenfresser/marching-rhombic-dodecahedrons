@@ -3,18 +3,35 @@ using System.Collections.Generic;
 using ValueMaps;
 
 public class WorldGenerator : MonoBehaviour {
+	private class TransformedFloat2D : Transformed<float, float, float, float> {
+		public TransformedFloat2D(ValueMap<float, float> valueMap, Vector2 scale, float angle, float outputScale) :
+			base(2, valueMap, (input) => new float[] {
+				Mathf.Cos(angle) * scale[0] * input[0] - Mathf.Sin(angle) * scale[1] * input[1],
+				Mathf.Sin(angle) * scale[0] * input[0] + Mathf.Cos(angle) * scale[1] * input[1]
+			}, (value) => {
+				return value * outputScale;
+			}) {}
+	}
+
+	private class CombinedFloat2D : Combined<float, float> {
+		public CombinedFloat2D(ValueMap<float, float>[] maps) : base(2, maps, (values) => {
+			float sum = 0;
+			foreach (float value in values) {
+				sum += value;
+			}
+			return sum;
+		}) {}
+	}
+
 	[SerializeField]
 	private float chunkGenerationInterval = 0.05f;
 	private float currentChunkGenerationCooldown = 0f;
 	private ISet<Vector3Int?> toGenerate = new HashSet<Vector3Int?>();
 
-	private ValueMap<float, float> heightMap = new Combined<float, float>(2, new ValueMap<float, float>[] {new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.05f, 0f, 5), new Transformed2D(new PerlinNoise2D(new System.Random(0)), 0.01f, 0.7f, 20)}, (values) => {
-		float sum = 0;
-		foreach (float value in values) {
-			sum += value;
-		}
-		return sum;
-	});
+	private ValueMap<float, float> heightMap = new CombinedFloat2D(new ValueMap<float, float>[] {
+		new TransformedFloat2D(new PerlinNoise2D(new System.Random(0)), Vector2.one * 0.05f, 0f, 5),
+		new TransformedFloat2D(new PerlinNoise2D(new System.Random(0)), Vector2.one *0.01f, 50 * Mathf.Deg2Rad, 20),
+		new TransformedFloat2D(new PerlinNoise2D(new System.Random(0)), Vector2.one * 0.00125f, 20f * Mathf.Deg2Rad, 40)});
 
 	private WorldData worldData {
 		get {
