@@ -7,7 +7,7 @@ public class ChunkData {
 		public BlockIndexer(ChunkData chunkData) : base(chunkData) {}
 
 		protected override BlockData Get(Vector3Int posInChunk) {
-			if (posInChunk.x >= 0 && posInChunk.x < RDGrid.chunkSize.x && posInChunk.y >= 0 && posInChunk.y < RDGrid.chunkSize.y && posInChunk.z >= 0 && posInChunk.z < RDGrid.chunkSize.z) {
+			if (posInChunk.x >= 0 && posInChunk.x < RDGrid.chunkSize && posInChunk.y >= 0 && posInChunk.y < RDGrid.chunkSize && posInChunk.z >= 0 && posInChunk.z < RDGrid.chunkSize) {
 				return obj.data[posInChunk.x, posInChunk.y, posInChunk.z];
 			}
 
@@ -15,7 +15,7 @@ public class ChunkData {
 		}
 
 		protected override void Set(Vector3Int posInChunk, BlockData value) {
-			if (posInChunk.x >= 0 && posInChunk.x < RDGrid.chunkSize.x && posInChunk.y >= 0 && posInChunk.y < RDGrid.chunkSize.y && posInChunk.z >= 0 && posInChunk.z < RDGrid.chunkSize.z) {
+			if (posInChunk.x >= 0 && posInChunk.x < RDGrid.chunkSize && posInChunk.y >= 0 && posInChunk.y < RDGrid.chunkSize && posInChunk.z >= 0 && posInChunk.z < RDGrid.chunkSize) {
 				obj.data[posInChunk.x, posInChunk.y, posInChunk.z] = value;
 			} else {
 				GameController.instance.worldData.blocks[RDGrid.FromChunkPos(obj.chunkPos, posInChunk)] = value;

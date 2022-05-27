@@ -21,8 +21,8 @@ class CameraController : MonoBehaviour {
 		transform.position += horizontal * Time.deltaTime * movementSpeed * (running ? runMultiplier : 1);
 
 		rotation += new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * turnSpeed * Time.deltaTime;
-
 		rotation.x = Mathf.Clamp(rotation.x, -90, 90);
+
 		transform.rotation = Quaternion.Euler(rotation);
 	}
 }

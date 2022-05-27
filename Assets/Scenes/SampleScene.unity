@@ -434,11 +434,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5605659710032129809, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: size.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5605659710032129809, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: size.z
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7455180820496161789, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
+      propertyPath: chunkGenerationInterval
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8628493248287346454, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: m_Name

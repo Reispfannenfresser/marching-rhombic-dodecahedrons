@@ -44,13 +44,14 @@ public struct BlockModelFace {
 public struct BlockModelData {
 	public readonly BlockModelFace[] blockfaces;
 	public readonly bool[] culls;
+	public readonly float[] loduv;
 
 	public bool Culls(FaceDirection dir) {
 		return culls[(int) dir.GetOpposite()];
 	}
 
 	[JsonConstructor]
-	public BlockModelData(BlockModelFace[] blockfaces, FaceDirection[] culls) {
+	public BlockModelData(BlockModelFace[] blockfaces, FaceDirection[] culls, float[] loduv) {
 		this.blockfaces = (blockfaces == null) ? new BlockModelFace[0] : blockfaces;
 		bool[] tmp = new bool[12] {false, false, false, false, false, false, false, false, false, false, false, false};
 		if (culls != null) {
@@ -59,5 +60,6 @@ public struct BlockModelData {
 			}
 		}
 		this.culls = tmp;
+		this.loduv = (loduv == null || loduv.Length != 4) ? null : loduv;
 	}
 }

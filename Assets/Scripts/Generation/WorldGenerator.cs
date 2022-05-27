@@ -54,10 +54,10 @@ public class WorldGenerator : MonoBehaviour {
 	private void GenerateChunk(Vector3Int chunkPos) {
 		Debug.Log("Generating: " + chunkPos);
 
-		BlockData[,,] blocks = new BlockData[RDGrid.chunkSize.x, RDGrid.chunkSize.y, RDGrid.chunkSize.z];
-		for(int x = 0; x < RDGrid.chunkSize.x; x++) {
-			for(int y = 0; y < RDGrid.chunkSize.y; y++) {
-				for(int z = 0; z < RDGrid.chunkSize.z; z++) {
+		BlockData[,,] blocks = new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize];
+		for(int x = 0; x < RDGrid.chunkSize; x++) {
+			for(int y = 0; y < RDGrid.chunkSize; y++) {
+				for(int z = 0; z < RDGrid.chunkSize; z++) {
 					Vector3Int posInChunk = new Vector3Int(x, y, z);
 					Vector3Int gridPos = RDGrid.FromChunkPos(chunkPos, posInChunk);
 					blocks[posInChunk.x, posInChunk.y, posInChunk.z] = new BlockData(gridPos, GetBlock(gridPos));
@@ -69,7 +69,7 @@ public class WorldGenerator : MonoBehaviour {
 
 	private void FixedUpdate() {
 		currentChunkGenerationCooldown -= Time.deltaTime;
-		while (currentChunkGenerationCooldown <= 0) {
+		if (currentChunkGenerationCooldown <= 0) {
 			currentChunkGenerationCooldown += chunkGenerationInterval;
 
 			IEnumerator<Vector3Int?> enumerator = toGenerate.GetEnumerator();
