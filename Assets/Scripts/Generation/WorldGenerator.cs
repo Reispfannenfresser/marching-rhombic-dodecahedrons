@@ -28,10 +28,13 @@ public class WorldGenerator : MonoBehaviour {
 	private float currentChunkGenerationCooldown = 0f;
 	private ISet<Vector3Int?> toGenerate = new HashSet<Vector3Int?>();
 
+	private static System.Random seedGenerator = new System.Random();
+
 	private ValueMap<float, float> heightMap = new CombinedFloat2D(new ValueMap<float, float>[] {
-		new TransformedFloat2D(new PerlinNoise2D(new System.Random(0)), Vector2.one * 0.05f, 0f, 5),
-		new TransformedFloat2D(new PerlinNoise2D(new System.Random(0)), Vector2.one *0.01f, 50 * Mathf.Deg2Rad, 20),
-		new TransformedFloat2D(new PerlinNoise2D(new System.Random(0)), Vector2.one * 0.00125f, 20f * Mathf.Deg2Rad, 40)});
+		new TransformedFloat2D(new PerlinNoise2D(seedGenerator), Vector2.one * 0.05f, 75f * Mathf.Deg2Rad, 10),
+		new TransformedFloat2D(new PerlinNoise2D(seedGenerator), Vector2.one * 0.01f, 45f * Mathf.Deg2Rad, 30),
+		new TransformedFloat2D(new PerlinNoise2D(seedGenerator), Vector2.one * 0.002f, 15f * Mathf.Deg2Rad, 60)
+	});
 
 	private WorldData worldData {
 		get {
