@@ -41,7 +41,7 @@ public struct BlockModelFace {
 }
 
 [System.Serializable]
-public struct BlockModel {
+public struct BlockModelData {
 	public readonly BlockModelFace[] blockfaces;
 	public readonly bool[] culls;
 
@@ -50,7 +50,7 @@ public struct BlockModel {
 	}
 
 	[JsonConstructor]
-	public BlockModel(BlockModelFace[] blockfaces, FaceDirection[] culls) {
+	public BlockModelData(BlockModelFace[] blockfaces, FaceDirection[] culls) {
 		this.blockfaces = (blockfaces == null) ? new BlockModelFace[0] : blockfaces;
 		bool[] tmp = new bool[12] {false, false, false, false, false, false, false, false, false, false, false, false};
 		if (culls != null) {

@@ -15,7 +15,7 @@ public static class ChunkMeshGenerator {
 			for(int y = 0; y < RDGrid.chunkSize.y; y++) {
 				for(int z = 0; z < RDGrid.chunkSize.z; z++) {
 					Vector3Int blockPos = new Vector3Int(x, y, z);
-					BlockModel model = BlockModels.GetBlockModel(chunkData.blocks[blockPos].block.id);
+					BlockModelData model = BlockModels.GetBlockModel(chunkData.blocks[blockPos].block.id);
 					int offset = vertices.Count;
 
 					foreach (BlockModelFace face in model.blockfaces) {
