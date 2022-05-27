@@ -1,10 +1,13 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(LODGroup))]
 public class ChunkRenderer : MonoBehaviour {
-	private MeshFilter meshFilter = null;
+	[SerializeField]
+	private MeshFilter[] meshFilters = new MeshFilter[0];
+	private LODGroup lodGroup = null;
+
 	private Vector3Int _chunkPos = Vector3Int.zero;
 	public Vector3Int chunkPos {
 		get {
@@ -14,23 +17,33 @@ public class ChunkRenderer : MonoBehaviour {
 			_chunkPos = value;
 
 			transform.position = RDGrid.ToLocal(RDGrid.FromChunkPos(chunkPos));
-			UpdateMesh();
+			UpdateMeshes();
 		}
 	}
 
 	private void Awake() {
-		meshFilter = GetComponent<MeshFilter>();
+		lodGroup = GetComponent<LODGroup>();
+
+		if (meshFilters.Length != lodGroup.lodCount) {
+			throw new ArgumentException("Number of LODs doesn't match the number of mesh filters provided.");
+		}
 	}
 
-	public void UpdateMesh() {
+	public void UpdateMeshes() {
 		Debug.Log("Updating Mesh of: " + chunkPos);
 
 		ChunkData chunkData = GameController.instance.worldData.chunks[chunkPos];
 		if (chunkData != null) {
-			meshFilter.mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
+			Mesh[] meshes = ChunkMeshGenerator.GenerateMeshes(chunkData, lodGroup.lodCount);
+
+			for(int i = 0; i < lodGroup.lodCount; i++) {
+				meshFilters[i].mesh = meshes[i];
+			}
 		}
 		else {
-			meshFilter.mesh.Clear();
+			for(int i = 0; i < lodGroup.lodCount; i++) {
+				meshFilters[i].mesh.Clear();
+			}
 		}
 	}
 }

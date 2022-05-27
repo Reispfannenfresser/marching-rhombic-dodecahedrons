@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 public static class ChunkMeshGenerator {
-	public static Mesh GenerateMesh(ChunkData chunkData) {
+	public static Mesh[] GenerateMeshes(ChunkData chunkData, int lodCount) {
 		Mesh mesh = new Mesh();
 
 		List<Vector3> vertices = new List<Vector3>();
@@ -23,7 +23,7 @@ public static class ChunkMeshGenerator {
 
 						foreach (FaceDirection faceDir in face.culledAs) {
 							BlockData neighbor = chunkData.blocks[blockPos + faceDir.GetVector()];
-							if (neighbor == null || !BlockModels.GetBlockModel(neighbor.block.id).Culls(faceDir)) {
+							if (neighbor != null && !BlockModels.GetBlockModel(neighbor.block.id).Culls(faceDir)) {
 								culled = false;
 								break;
 							}
@@ -51,6 +51,11 @@ public static class ChunkMeshGenerator {
 		mesh.triangles = triangles.ToArray();
 		mesh.normals = normals.ToArray();
 
-		return mesh;
+		Mesh[] meshes = new Mesh[lodCount];
+		for (int i = 0; i < lodCount; i++) {
+			meshes[i] = mesh;
+		}
+
+		return meshes;
 	}
 }

@@ -36,7 +36,7 @@ public class WorldRenderer : MonoBehaviour {
 		// update chunk meshes
 		foreach (Vector3Int affectedChunkPos in affectedChunkPositions) {
 			if (chunkRenderers.ContainsKey(affectedChunkPos)) {
-				chunkRenderers[affectedChunkPos].UpdateMesh();
+				chunkRenderers[affectedChunkPos].UpdateMeshes();
 			}
 		}
 	}
@@ -53,7 +53,7 @@ public class WorldRenderer : MonoBehaviour {
 		// update chunk meshes
 		foreach (Vector3Int affectedChunkPos in affectedChunkPositions) {
 			if (chunkRenderers.ContainsKey(affectedChunkPos)) {
-				chunkRenderers[affectedChunkPos].UpdateMesh();
+				chunkRenderers[affectedChunkPos].UpdateMeshes();
 			}
 		}
 	}

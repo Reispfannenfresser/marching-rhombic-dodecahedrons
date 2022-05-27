@@ -1,0 +1,202 @@
+{
+	"blockfaces" : [
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, 1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [-1, 0, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, 1],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [-1, 1, 1]
+			},
+			"culledAs" : [0, 1, 4]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, 1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, 1],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [1, 0, 0],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [1, 1, 1]
+			},
+			"culledAs" : [1, 2, 5]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, 1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [1, 0, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, -1],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [1, 1, -1]
+			},
+			"culledAs" : [2, 3, 6]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, 1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, -1],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [-1, 0, 0],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [-1, 1, -1]
+			},
+			"culledAs" : [0, 3, 7]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, -1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, 1],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [-1, 0, 0],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [-1, -1, 1]
+			},
+			"culledAs" : [4, 8, 9]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, -1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [1, 0, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, 1],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [1, -1, 1]
+			},
+			"culledAs" : [5, 9, 10]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, -1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, -1],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [1, 0, 0],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [1, -1, -1]
+			},
+			"culledAs" : [6, 10, 11]
+		},
+		{
+			"faceInformation": {
+				"vertexInformation": [
+					{
+						"position" : [0, -1, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [-1, 0, 0],
+						"uv" : [0, 0]
+					},
+					{
+						"position" : [0, 0, -1],
+						"uv" : [0, 0]
+					}
+				],
+				"triangles" : [
+					0, 1, 2
+				],
+				"normal" : [-1, -1, -1]
+			},
+			"culledAs" : [7, 8, 11]
+		}
+	],
+	"culls" : [
+		0,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		11
+	]
+}
