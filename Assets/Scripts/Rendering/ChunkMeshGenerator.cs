@@ -70,8 +70,9 @@ public static class ChunkMeshGenerator {
 							Dictionary<int, int> vertexIndices = new Dictionary<int, int>();
 
 							foreach (LODMesh.LODFace lodFace in LODMesh.faces) {
-								BlockData neighbor = chunkData.blocks[SubGridPos + lodFace.culledAs.GetVector() * subGridSize];
-								if (neighbor == null || BlockModels.GetBlockModel(neighbor.block.id).loduv != null) {
+								Vector3Int neighborPos = SubGridPos + lodFace.culledAs.GetVector() * subGridSize;
+								BlockData neighbor = chunkData.blocks[neighborPos];
+								if (neighbor == null || RDGrid.IsInChunk(neighborPos) && BlockModels.GetBlockModel(neighbor.block.id).loduv != null) {
 									continue;
 								}
 
