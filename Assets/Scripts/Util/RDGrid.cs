@@ -29,6 +29,10 @@ static class RDGrid {
 		return posInChunk;
 	}
 
+	public static bool IsInChunk(Vector3Int posInChunk) {
+		return posInChunk.x >= 0 && posInChunk.x < chunkSize && posInChunk.y >= 0 && posInChunk.y < chunkSize && posInChunk.z >= 0 && posInChunk.z < chunkSize;
+	}
+
 	public static Vector3Int FromChunkPos(Vector3Int chunkPos) {
 		return new Vector3Int(chunkPos.x, chunkPos.y, chunkPos.z) * chunkSize;
 	}

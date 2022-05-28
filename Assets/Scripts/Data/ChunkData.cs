@@ -15,7 +15,7 @@ public class ChunkData {
 		}
 
 		protected override void Set(Vector3Int posInChunk, BlockData value) {
-			if (posInChunk.x >= 0 && posInChunk.x < RDGrid.chunkSize && posInChunk.y >= 0 && posInChunk.y < RDGrid.chunkSize && posInChunk.z >= 0 && posInChunk.z < RDGrid.chunkSize) {
+			if (RDGrid.IsInChunk(posInChunk)) {
 				obj.data[posInChunk.x, posInChunk.y, posInChunk.z] = value;
 			} else {
 				GameController.instance.worldData.blocks[RDGrid.FromChunkPos(obj.chunkPos, posInChunk)] = value;
