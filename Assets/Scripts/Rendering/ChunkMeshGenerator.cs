@@ -68,6 +68,8 @@ public static class ChunkMeshGenerator {
 						BlockModelData model = BlockModels.GetBlockModel(blockID);
 						if (model.loduv != null) {
 							Dictionary<int, int> vertexIndices = new Dictionary<int, int>();
+							Vector2 uvOffset = new Vector2(model.loduv[0], model.loduv[1]);
+							Vector2 uvScale = new Vector2(model.loduv[2] - model.loduv[0], model.loduv[3] - model.loduv[1]);
 
 							foreach (LODMesh.LODFace lodFace in LODMesh.faces) {
 								Vector3Int neighborPos = SubGridPos + lodFace.culledAs.GetVector() * subGridSize;
@@ -80,7 +82,7 @@ public static class ChunkMeshGenerator {
 									if (!vertexIndices.ContainsKey(vertexIndex)) {
 										vertexIndices.Add(vertexIndex, vertices[i].Count);
 										vertices[i].Add(LODMesh.vertices[vertexIndex] * subGridSize + RDGrid.FloatingGridToLocal(SubGridPos + Vector3.one * (subGridSize - 1) / 2));
-										uv[i].Add(LODMesh.uv[vertexIndex]);
+										uv[i].Add(uvOffset + new Vector2(LODMesh.uv[vertexIndex].x * uvScale.x, LODMesh.uv[vertexIndex].y * uvScale.y));
 									}
 								}
 
