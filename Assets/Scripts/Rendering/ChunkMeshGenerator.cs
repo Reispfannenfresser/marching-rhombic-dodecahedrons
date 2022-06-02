@@ -81,7 +81,7 @@ public static class ChunkMeshGenerator {
 								foreach (int vertexIndex in lodFace.vertexIndices) {
 									if (!vertexIndices.ContainsKey(vertexIndex)) {
 										vertexIndices.Add(vertexIndex, vertices[i].Count);
-										vertices[i].Add(LODMesh.vertices[vertexIndex] * subGridSize + RDGrid.FloatingGridToLocal(SubGridPos + Vector3.one * (subGridSize - 1) / 2));
+										vertices[i].Add(LODMesh.vertices[vertexIndex] * subGridSize + RDGrid.ToLocal(SubGridPos + Vector3.one * (subGridSize - 1) / 2));
 										uv[i].Add(uvOffset + new Vector2(LODMesh.uv[vertexIndex].x * uvScale.x, LODMesh.uv[vertexIndex].y * uvScale.y));
 									}
 								}
