@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
-  turnSpeed: 300
+  turnSpeed: 10
   runMultiplier: 2.5
 --- !u!1001 &1610610186
 PrefabInstance:
