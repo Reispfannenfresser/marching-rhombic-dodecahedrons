@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using MeshData;
 
 public static class ChunkMeshGenerator {
 	public static Mesh[] GenerateMeshes(ChunkData chunkData, int lodCount) {
@@ -28,7 +29,7 @@ public static class ChunkMeshGenerator {
 					BlockModelData model = BlockModels.GetBlockModel(chunkData.blocks[blockPos].block.id);
 					int offset = vertices[0].Count;
 
-					foreach (BlockModelFace face in model.blockfaces) {
+					foreach (BlockModelFace face in model.faces) {
 						bool culled = true;
 
 						foreach (FaceDirection faceDir in face.culledAs) {
@@ -45,11 +46,11 @@ public static class ChunkMeshGenerator {
 
 						int triangleIndexOffset = vertices[0].Count;
 
-						foreach(VertexInformation vertex in face.faceInformation.vertexInformation) {
+						foreach(VertexData vertex in face.mesh.vertices) {
 							vertices[0].Add(vertex.position + RDGrid.ToLocal(blockPos));
 							uv[0].Add(vertex.uv);
 						}
-						foreach(int triangleIndex in face.faceInformation.triangles) {
+						foreach(int triangleIndex in face.mesh.triangles) {
 							triangles[0].Add(triangleIndex + triangleIndexOffset);
 						}
 					}

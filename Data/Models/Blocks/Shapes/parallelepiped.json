@@ -1,8 +1,8 @@
 {
-	"blockfaces" : [
+	"faces" : [
 		{
-			"faceInformation": {
-				"vertexInformation": [
+			"mesh": {
+				"vertices": [
 					{
 						"position" : [-0.5, 0.5, 0],
 						"uv" : [0, 0]
@@ -23,14 +23,13 @@
 				"triangles" : [
 					0, 1, 2,
 					2, 3, 0
-				],
-				"normal" : [0, 1, 0]
+				]
 			},
 			"culledAs" : [2]
 		},
 		{
-			"faceInformation": {
-				"vertexInformation": [
+			"mesh": {
+				"vertices": [
 					{
 						"position" : [-0.5, -0.5, 1],
 						"uv" : [0, 0]
@@ -51,14 +50,13 @@
 				"triangles" : [
 					0, 1, 2,
 					2, 3, 0
-				],
-				"normal" : [-1, 1, 1]
+				]
 			},
 			"culledAs" : [4]
 		},
 		{
-			"faceInformation": {
-				"vertexInformation": [
+			"mesh": {
+				"vertices": [
 					{
 						"position" : [0.5, -0.5, 0],
 						"uv" : [0, 0]
@@ -79,14 +77,13 @@
 				"triangles" : [
 					0, 1, 2,
 					2, 3, 0
-				],
-				"normal" : [1, -1, 1]
+				]
 			},
 			"culledAs" : [5]
 		},
 		{
-			"faceInformation": {
-				"vertexInformation": [
+			"mesh": {
+				"vertices": [
 					{
 						"position" : [-0.5, -0.5, -1],
 						"uv" : [0, 0]
@@ -107,14 +104,13 @@
 				"triangles" : [
 					0, 1, 2,
 					2, 3, 0
-				],
-				"normal" : [1, -1, -1]
+				]
 			},
 			"culledAs" : [6]
 		},
 		{
-			"faceInformation": {
-				"vertexInformation": [
+			"mesh": {
+				"vertices": [
 					{
 						"position" : [-1.5, -0.5, 0],
 						"uv" : [0, 0]
@@ -135,14 +131,13 @@
 				"triangles" : [
 					0, 1, 2,
 					2, 3, 0
-				],
-				"normal" : [-1, 1, -1]
+				]
 			},
 			"culledAs" : [7]
 		},
 		{
-			"faceInformation": {
-				"vertexInformation": [
+			"mesh": {
+				"vertices": [
 					{
 						"position" : [-1.5, -0.5, 0],
 						"uv" : [0, 0]
@@ -163,8 +158,7 @@
 				"triangles" : [
 					0, 1, 2,
 					2, 3, 0
-				],
-				"normal" : [0, -1, 0]
+				]
 			},
 			"culledAs" : [8]
 		}

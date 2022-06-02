@@ -1,48 +1,23 @@
 using System;
 using UnityEngine;
 using Newtonsoft.Json;
-
-[System.Serializable]
-public struct VertexInformation {
-	public readonly Vector3 position;
-	public readonly Vector2 uv;
-
-	[JsonConstructor]
-	public VertexInformation(float[] position, float[] uv) {
-		this.position = (position == null || position.Length != 3) ? default(Vector3) : new Vector3(position[0], position[1], position[2]);
-		this.uv = (uv == null || uv.Length != 2) ? default(Vector2) : new Vector2(uv[0], uv[1]);
-	}
-}
-
-[System.Serializable]
-public struct FaceInformation {
-	public readonly VertexInformation[] vertexInformation;
-	public readonly Vector3 normal;
-	public readonly int[] triangles;
-
-	[JsonConstructor]
-	public FaceInformation(VertexInformation[] vertexInformation, int[] normal, int[] triangles) {
-		this.vertexInformation = (vertexInformation == null) ? new VertexInformation[0] : vertexInformation;
-		this.normal = (normal == null || normal.Length != 3) ? default(Vector3) : new Vector3Int(normal[0], normal[1], normal[2]);
-		this.triangles = (triangles == null) ? new int[0] : triangles;
-	}
-}
+using MeshData;
 
 [System.Serializable]
 public struct BlockModelFace {
-	public readonly FaceInformation faceInformation;
+	public readonly MeshData.MeshData mesh;
 	public readonly FaceDirection[] culledAs;
 
 	[JsonConstructor]
-	public BlockModelFace(FaceInformation faceInformation, FaceDirection[] culledAs) {
-		this.faceInformation = faceInformation;
+	public BlockModelFace(MeshData.MeshData mesh, FaceDirection[] culledAs) {
+		this.mesh = mesh;
 		this.culledAs = (culledAs == null) ? new FaceDirection[0] : culledAs;
 	}
 }
 
 [System.Serializable]
 public struct BlockModelData {
-	public readonly BlockModelFace[] blockfaces;
+	public readonly BlockModelFace[] faces;
 	public readonly bool[] culls;
 	public readonly float[] loduv;
 
@@ -51,8 +26,8 @@ public struct BlockModelData {
 	}
 
 	[JsonConstructor]
-	public BlockModelData(BlockModelFace[] blockfaces, FaceDirection[] culls, float[] loduv) {
-		this.blockfaces = (blockfaces == null) ? new BlockModelFace[0] : blockfaces;
+	public BlockModelData(BlockModelFace[] faces, FaceDirection[] culls, float[] loduv) {
+		this.faces = (faces == null) ? new BlockModelFace[0] : faces;
 		bool[] tmp = new bool[12] {false, false, false, false, false, false, false, false, false, false, false, false};
 		if (culls != null) {
 			foreach (FaceDirection cull in culls) {
