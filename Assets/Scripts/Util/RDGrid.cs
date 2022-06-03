@@ -2,9 +2,7 @@ using UnityEngine;
 
 static class RDGrid {
 	public static readonly int chunkSize = 8;
-
 	private static Matrix4x4 fromGrid = new Matrix4x4(new Vector4(1, 0, -1, 0), new Vector4(1, 1, 0, 0), new Vector4(1, 0, 1, 0), new Vector4(0, 0, 0, 1));
-
 	private static Matrix4x4 toGrid = new Matrix4x4(new Vector4(0.5f, 0, 0.5f, 0), new Vector4(-0.5f, 1, -0.5f, 0), new Vector4(-0.5f, 0, 0.5f, 0), new Vector4(0, 0, 0, 1));
 
 	public static Vector3Int ToChunkPos(Vector3Int gridPos) {
