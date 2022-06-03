@@ -7,13 +7,16 @@ namespace MeshData {
 	public struct VertexData {
 		public readonly Vector3 position;
 		public readonly Vector2 uv;
-		public readonly Vector3 normal;
 
 		[JsonConstructor]
-		public VertexData(float[] position, float[] normal, float[] uv) {
+		public VertexData(float[] position, float[] uv) {
 			this.position = (position == null || position.Length != 3) ? default(Vector3) : new Vector3(position[0], position[1], position[2]);
-			this.normal = (normal == null || normal.Length != 3) ? default(Vector3) : new Vector3(normal[0], normal[1], normal[2]);
 			this.uv = (uv == null || uv.Length != 2) ? default(Vector2) : new Vector2(uv[0], uv[1]);
+		}
+
+		public VertexData(Vector3 position, Vector2 uv) {
+			this.position = position;
+			this.uv = uv;
 		}
 	}
 
