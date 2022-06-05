@@ -430,7 +430,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5605659710032129809, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: size.x
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5605659710032129809, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: size.y
@@ -438,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5605659710032129809, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: size.z
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7455180820496161789, guid: c7108063c1344eff39e7e22458b68ba7, type: 3}
       propertyPath: chunkGenerationInterval

@@ -3,16 +3,16 @@ using MeshData;
 
 namespace MarchingRhombicDodecahedrons {
 	public class Meshes {
-		private struct TransformedMesh {
-			Matrix4x4 transformationMatrix;
-			int meshIndex;
+		public struct TransformedMesh {
+			public readonly Matrix4x4 transformationMatrix;
+			public readonly int meshIndex;
 			public TransformedMesh(Matrix4x4 transformationMatrix, int meshIndex) {
 				this.transformationMatrix = transformationMatrix;
 				this.meshIndex = meshIndex;
 			}
 		}
 
-		private static MeshData.MeshData[] tetrahedronMeshes = new MeshData.MeshData[] {
+		public static MeshData.MeshData[] tetrahedronMeshes = new MeshData.MeshData[] {
 			// 0 or 4
 			new MeshData.MeshData(
 				new VertexData[0],
@@ -55,7 +55,7 @@ namespace MarchingRhombicDodecahedrons {
 			)
 		};
 
-		private static MeshData.MeshData[] octahedronMeshes = new MeshData.MeshData[] {
+		public static MeshData.MeshData[] octahedronMeshes = new MeshData.MeshData[] {
 			// 0 or 6
 			new MeshData.MeshData(
 				new VertexData[0],
@@ -128,9 +128,8 @@ namespace MarchingRhombicDodecahedrons {
 					new VertexData(new Vector3(-0.5f, 0, -0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, -0.5f, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, -0.5f, 0.5f), new Vector2(0, 0)),
-					new VertexData(new Vector3(-0.5f, -0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0.5f, -0.5f, 0), new Vector2(0, 0))
-
+					new VertexData(new Vector3(0.5f, -0.5f, 0), new Vector2(0, 0)),
+					new VertexData(new Vector3(-0.5f, -0.5f, 0), new Vector2(0, 0))
 				},
 				new int[] {
 					0, 1, 2,
@@ -231,7 +230,7 @@ namespace MarchingRhombicDodecahedrons {
 		// 0010: FRU
 		// 0100: FLD
 		// 1000: BRD
-		private static TransformedMesh[] transformedTetrahedronMeshes = new TransformedMesh[] {
+		public static TransformedMesh[] transformedTetrahedronMeshes = new TransformedMesh[] {
 			// 0000
 			new TransformedMesh(Matrix4x4.identity, 0),
 			// 0001
@@ -266,13 +265,41 @@ namespace MarchingRhombicDodecahedrons {
 			new TransformedMesh(Matrix4x4.identity, 0),
 		};
 
+		public static Vector3Int[] octahedronGrid = new Vector3Int[] {
+			Vector3Int.zero,
+			FaceDirection.DB.GetVector(),
+			FaceDirection.DL.GetVector(),
+			FaceDirection.DF.GetVector(),
+			FaceDirection.DR.GetVector(),
+			CornerDirection.D.GetVector()
+		};
+
+		public static Vector3Int[] tetrahedronGrid = new Vector3Int[] {
+			Vector3Int.zero,
+			FaceDirection.FR.GetVector(),
+			FaceDirection.DF.GetVector(),
+			FaceDirection.DR.GetVector()
+		};
+
+		public static Vector3Int[] tetrahedronGrid2 = new Vector3Int[] {
+			Vector3Int.zero,
+			FaceDirection.LF.GetVector(),
+			FaceDirection.DL.GetVector(),
+			FaceDirection.DF.GetVector()
+		};
+
+		public static Vector3 octahedronGridOffset = new Vector3(0, -1f, 0);
+		public static Vector3 tetrahedronGridOffset = new Vector3(0.5f, -0.5f, 0.5f);
+		public static Vector3 tetrahedronGrid2Offset = new Vector3(-0.5f, -0.5f, 0.5f);
+		public static Matrix4x4 tetrahedronGrid2Transform = Matrix4x4.Rotate(Quaternion.Euler(0, -90, 0));
+
 		// 000001: U
 		// 000010: B
 		// 000100: L
 		// 001000: F
 		// 010000: R
 		// 100000: D
-		private static TransformedMesh[] transformedOctahedronMeshes = new TransformedMesh[] {
+		public static TransformedMesh[] transformedOctahedronMeshes = new TransformedMesh[] {
 			// 000000
 			new TransformedMesh(Matrix4x4.identity, 0),
 			// 000001
@@ -378,7 +405,7 @@ namespace MarchingRhombicDodecahedrons {
 			// 110011
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 90)), 7),
 			// 110100
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 90, 90)), 4),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(-90, 90, 0)), 4),
 			// 110101
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 0)), 8),
 			// 110110

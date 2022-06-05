@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using MeshData;
+using MarchingRhombicDodecahedrons;
 
 public static class ChunkMeshGenerator {
 	public static Mesh[] GenerateMeshes(ChunkData chunkData, int lodCount) {
@@ -24,33 +25,92 @@ public static class ChunkMeshGenerator {
 		for(int x = 0; x < RDGrid.chunkSize; x++) {
 			for(int y = 0; y < RDGrid.chunkSize; y++) {
 				for(int z = 0; z < RDGrid.chunkSize; z++) {
-					// main mesh
 					Vector3Int blockPos = new Vector3Int(x, y, z);
-					BlockModelData model = BlockModels.GetBlockModel(chunkData.blocks[blockPos].block.id);
-					int offset = vertices[0].Count;
 
-					foreach (BlockModelFace face in model.faces) {
-						bool culled = true;
-
-						foreach (FaceDirection faceDir in face.culledAs) {
-							BlockData neighbor = chunkData.blocks[blockPos + faceDir.GetVector()];
-							if (neighbor != null && !BlockModels.GetBlockModel(neighbor.block.id).Culls(faceDir)) {
-								culled = false;
-								break;
-							}
+					// octahedrons
+					bool shouldSkip = false;
+					int meshIndex = 0;
+					for (int i = 0; i < Meshes.octahedronGrid.Length; i++) {
+						BlockData neighbor = chunkData.blocks[blockPos + Meshes.octahedronGrid[i]];
+						if (neighbor == null) {
+							shouldSkip = true;
+							break;
 						}
-
-						if (culled) {
-							continue;
+						if (neighbor.block == Blocks.GetBlock("ground")) {
+							meshIndex += 1 << i;
 						}
+					}
+
+					if (!shouldSkip) {
+						Meshes.TransformedMesh transformedMesh = Meshes.transformedOctahedronMeshes[meshIndex];
+						MeshData.MeshData meshData = Meshes.octahedronMeshes[transformedMesh.meshIndex];
 
 						int triangleIndexOffset = vertices[0].Count;
 
-						foreach(VertexData vertex in face.mesh.vertices) {
-							vertices[0].Add(vertex.position + RDGrid.ToLocal(blockPos));
+						foreach(VertexData vertex in meshData.vertices) {
+							vertices[0].Add(transformedMesh.transformationMatrix.MultiplyVector(vertex.position) + RDGrid.ToLocal(blockPos) + Meshes.octahedronGridOffset);
 							uv[0].Add(vertex.uv);
 						}
-						foreach(int triangleIndex in face.mesh.triangles) {
+						foreach(int triangleIndex in meshData.triangles) {
+							triangles[0].Add(triangleIndex + triangleIndexOffset);
+						}
+					}
+
+
+					// tetrahedron1
+					shouldSkip = false;
+					meshIndex = 0;
+					for (int i = 0; i < Meshes.tetrahedronGrid.Length; i++) {
+						BlockData neighbor = chunkData.blocks[blockPos + Meshes.tetrahedronGrid[i]];
+						if (neighbor == null) {
+							shouldSkip = true;
+							break;
+						}
+						if (neighbor.block == Blocks.GetBlock("ground")) {
+							meshIndex += 1 << i;
+						}
+					}
+
+					if (!shouldSkip) {
+						Meshes.TransformedMesh transformedMesh = Meshes.transformedTetrahedronMeshes[meshIndex];
+						MeshData.MeshData meshData = Meshes.tetrahedronMeshes[transformedMesh.meshIndex];
+
+						int triangleIndexOffset = vertices[0].Count;
+
+						foreach(VertexData vertex in meshData.vertices) {
+							vertices[0].Add(transformedMesh.transformationMatrix.MultiplyVector(vertex.position) + RDGrid.ToLocal(blockPos) + Meshes.tetrahedronGridOffset);
+							uv[0].Add(vertex.uv);
+						}
+						foreach(int triangleIndex in meshData.triangles) {
+							triangles[0].Add(triangleIndex + triangleIndexOffset);
+						}
+					}
+
+					// tetrahedron2
+					shouldSkip = false;
+					meshIndex = 0;
+					for (int i = 0; i < Meshes.tetrahedronGrid2.Length; i++) {
+						BlockData neighbor = chunkData.blocks[blockPos + Meshes.tetrahedronGrid2[i]];
+						if (neighbor == null) {
+							shouldSkip = true;
+							break;
+						}
+						if (neighbor.block == Blocks.GetBlock("ground")) {
+							meshIndex += 1 << i;
+						}
+					}
+
+					if (!shouldSkip) {
+						Meshes.TransformedMesh transformedMesh = Meshes.transformedTetrahedronMeshes[meshIndex];
+						MeshData.MeshData meshData = Meshes.tetrahedronMeshes[transformedMesh.meshIndex];
+
+						int triangleIndexOffset = vertices[0].Count;
+
+						foreach(VertexData vertex in meshData.vertices) {
+							vertices[0].Add(Meshes.tetrahedronGrid2Transform.MultiplyVector(transformedMesh.transformationMatrix.MultiplyVector(vertex.position)) + RDGrid.ToLocal(blockPos) + Meshes.tetrahedronGrid2Offset);
+							uv[0].Add(vertex.uv);
+						}
+						foreach(int triangleIndex in meshData.triangles) {
 							triangles[0].Add(triangleIndex + triangleIndexOffset);
 						}
 					}
