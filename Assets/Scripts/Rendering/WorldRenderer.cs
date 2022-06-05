@@ -49,6 +49,9 @@ public class WorldRenderer : MonoBehaviour {
 		foreach (FaceDirection dir in Enum.GetValues(typeof(FaceDirection))) {
 			affectedChunkPositions.Add(RDGrid.ToChunkPos(blockPos + dir.GetVector()));
 		}
+		foreach (CornerDirection dir in Enum.GetValues(typeof(CornerDirection))) {
+			affectedChunkPositions.Add(RDGrid.ToChunkPos(blockPos + dir.GetVector()));
+		}
 
 		// update chunk meshes
 		foreach (Vector3Int affectedChunkPos in affectedChunkPositions) {
