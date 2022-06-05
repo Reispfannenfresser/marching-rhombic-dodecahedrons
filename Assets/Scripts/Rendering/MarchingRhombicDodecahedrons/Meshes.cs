@@ -325,11 +325,11 @@ namespace MarchingRhombicDodecahedrons {
 			// 001011
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 0)), 4),
 			// 001100
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 90)), 2),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 90, 90)), 2),
 			// 001101
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 90, 0)), 5),
 			// 001110
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 90)), 4),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 90, 90)), 4),
 			// 001111
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(-90, -90, 0)), 7),
 			// 010000
@@ -349,15 +349,15 @@ namespace MarchingRhombicDodecahedrons {
 			// 010111
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(180, 0, 0)), 7),
 			// 011000
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, -90)), 2),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 180, 90)), 2),
 			// 011001
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 180, 0)), 5),
 			// 011010
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, -90)), 4),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, -90, 90)), 4),
 			// 011011
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 0, 90)), 7),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(-90, 90, 0)), 7),
 			// 011100
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 90)), 4),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 180, 90)), 4),
 			// 011101
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(-90, 0, 0)), 7),
 			// 011110
@@ -379,7 +379,7 @@ namespace MarchingRhombicDodecahedrons {
 			// 100110
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 180, 0)), 6),
 			// 100111
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, -90)), 7),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 180, 90)), 7),
 			// 101000
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(-90, 180, 0)), 2),
 			// 101001
@@ -403,7 +403,7 @@ namespace MarchingRhombicDodecahedrons {
 			// 110010
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 90, 0)), 6),
 			// 110011
-			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 90)), 7),
+			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(0, 180, -90)), 7),
 			// 110100
 			new TransformedMesh(Matrix4x4.Rotate(Quaternion.Euler(-90, 90, 0)), 4),
 			// 110101
