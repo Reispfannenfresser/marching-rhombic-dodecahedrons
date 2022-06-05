@@ -1,2 +1,5 @@
-# marching-rhombic-dodecahedrons
-Some unity marching rhombic dodecahedron experiments
+Marching Rhombic Dodecahedrons
+===
+(Secretly using a tetrahedral-octahedral honeycomb)
+
+This project mostly contains private experimentation, but may be funny to look at.
