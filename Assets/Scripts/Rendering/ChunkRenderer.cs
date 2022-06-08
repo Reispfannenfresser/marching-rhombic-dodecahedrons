@@ -2,11 +2,9 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(LODGroup))]
+[RequireComponent(typeof(MeshFilter))]
 public class ChunkRenderer : MonoBehaviour {
-	[SerializeField]
-	private MeshFilter[] meshFilters = new MeshFilter[0];
-	private LODGroup lodGroup = null;
+	private MeshFilter meshFilter;
 
 	private Vector3Int _chunkPos = Vector3Int.zero;
 	public Vector3Int chunkPos {
@@ -22,11 +20,7 @@ public class ChunkRenderer : MonoBehaviour {
 	}
 
 	private void Awake() {
-		lodGroup = GetComponent<LODGroup>();
-
-		if (meshFilters.Length != lodGroup.lodCount) {
-			throw new ArgumentException("Number of LODs doesn't match the number of mesh filters provided.");
-		}
+		meshFilter = GetComponent<MeshFilter>();
 	}
 
 	public void UpdateMeshes() {
@@ -34,16 +28,10 @@ public class ChunkRenderer : MonoBehaviour {
 
 		ChunkData chunkData = GameController.instance.worldData.chunks[chunkPos];
 		if (chunkData != null) {
-			Mesh[] meshes = ChunkMeshGenerator.GenerateMeshes(chunkData, lodGroup.lodCount);
-
-			for(int i = 0; i < lodGroup.lodCount; i++) {
-				meshFilters[i].mesh = meshes[i];
-			}
+			meshFilter.mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
 		}
 		else {
-			for(int i = 0; i < lodGroup.lodCount; i++) {
-				meshFilters[i].mesh.Clear();
-			}
+			meshFilter.mesh.Clear();
 		}
 	}
 }
