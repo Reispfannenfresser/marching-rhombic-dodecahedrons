@@ -32,10 +32,10 @@ namespace MarchingRhombicDodecahedrons {
 			// 2
 			new MeshData.MeshData(
 				new VertexData[] {
-					new VertexData(new Vector3(0.5f, 0, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, 0, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, 0, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, 0, -0.5f), new Vector2(0, 0))
+					new VertexData(new Vector3(0, 0, -0.5f), new Vector2(0, 0)),
+					new VertexData(new Vector3(0.5f, 0, 0), new Vector2(0, 0))
 				},
 				new int[] {
 					0, 1, 2,
@@ -64,10 +64,10 @@ namespace MarchingRhombicDodecahedrons {
 			// 1
 			new MeshData.MeshData(
 				new VertexData[] {
-					new VertexData(new Vector3(0.5f, 0.5f, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, 0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, 0.5f, -0.5f), new Vector2(0, 0))
+					new VertexData(new Vector3(0, 0.5f, -0.5f), new Vector2(0, 0)),
+					new VertexData(new Vector3(0.5f, 0.5f, 0), new Vector2(0, 0))
 				},
 				new int[] {
 					0, 1, 2,
@@ -114,11 +114,10 @@ namespace MarchingRhombicDodecahedrons {
 			// 3
 			new MeshData.MeshData(
 				new VertexData[] {
+					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, 0, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0.5f, 0, -0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(0.5f, 0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, 0, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, 0.5f, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, 0, -0.5f), new Vector2(0, 0)),
@@ -129,7 +128,8 @@ namespace MarchingRhombicDodecahedrons {
 					new VertexData(new Vector3(0, 0, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, -0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(0.5f, -0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0.5f, 0, -0.5f), new Vector2(0, 0))
+					new VertexData(new Vector3(0.5f, 0, -0.5f), new Vector2(0, 0)),
+					new VertexData(new Vector3(0, 0, 0), new Vector2(0, 0))
 				},
 				new int[] {
 					0, 1, 2,
@@ -195,14 +195,14 @@ namespace MarchingRhombicDodecahedrons {
 			),
 			new MeshData.MeshData(
 				new VertexData[] {
+					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(0.5f, 0.5f, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, 0.5f, -0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, 0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
-					new VertexData(new Vector3(0.5f, -0.5f, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, -0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(-0.5f, -0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, -0.5f, -0.5f), new Vector2(0, 0))
+					new VertexData(new Vector3(0, -0.5f, -0.5f), new Vector2(0, 0)),
+					new VertexData(new Vector3(0.5f, -0.5f, 0), new Vector2(0, 0))
 				},
 				new int[] {
 					0, 1, 2,
@@ -214,10 +214,10 @@ namespace MarchingRhombicDodecahedrons {
 			// 5
 			new MeshData.MeshData(
 				new VertexData[] {
+					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0)),
 					new VertexData(new Vector3(0.5f, 0.5f, 0), new Vector2(0, 0)),
 					new VertexData(new Vector3(0, 0.5f, -0.5f), new Vector2(0, 0)),
-					new VertexData(new Vector3(-0.5f, 0.5f, 0), new Vector2(0, 0)),
-					new VertexData(new Vector3(0, 0.5f, 0.5f), new Vector2(0, 0))
+					new VertexData(new Vector3(-0.5f, 0.5f, 0), new Vector2(0, 0))
 				},
 				new int[] {
 					0, 1, 2,
