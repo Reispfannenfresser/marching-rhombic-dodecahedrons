@@ -57,7 +57,7 @@ namespace MRD.Rendering {
 
 			Mesh mesh = new Mesh();
 			mesh.vertices = allVertices.ToArray();
-			mesh.uv = allUV.ToArray();
+			mesh.SetUVs(0, allUV);
 			mesh.triangles = allTriangles.ToArray();
 			mesh.RecalculateNormals();
 
