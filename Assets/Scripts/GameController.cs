@@ -1,4 +1,7 @@
 using UnityEngine;
+using MRD.Rendering;
+using MRD.WorldGen;
+using MRD.Data;
 
 [RequireComponent(typeof(WorldRenderer))]
 [RequireComponent(typeof(WorldGenerator))]
