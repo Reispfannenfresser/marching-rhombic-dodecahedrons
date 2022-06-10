@@ -142,7 +142,7 @@ namespace MRD.Rendering {
 				// 0000
 				(Matrix4x4.identity, 0),
 				// 0001
-				(Matrix4x4.identity, 1),
+				(Matrix4x4.Rotate(Quaternion.Euler(0, -90, 0)), 1),
 				// 0010
 				(Matrix4x4.Rotate(Quaternion.Euler(0, 90, 0)), 1),
 				// 0011
@@ -150,17 +150,17 @@ namespace MRD.Rendering {
 				// 0100
 				(Matrix4x4.Rotate(Quaternion.Euler(180, -90, 0)), 1),
 				// 0101
-				(Matrix4x4.Rotate(Quaternion.Euler(0, 0, 90)), 2),
+				(Matrix4x4.Rotate(Quaternion.Euler(0, -90, 90)), 2),
 				// 0110
-				(Matrix4x4.Rotate(Quaternion.Euler(90, 0, 0)), 2),
+				(Matrix4x4.Rotate(Quaternion.Euler(90, -90, 0)), 2),
 				// 0111
 				(Matrix4x4.Rotate(Quaternion.Euler(0, -90, 180)), 3),
 				// 1000
 				(Matrix4x4.Rotate(Quaternion.Euler(0, -90, 180)), 1),
 				// 1001
-				(Matrix4x4.Rotate(Quaternion.Euler(-90, 0, 0)), 2),
+				(Matrix4x4.Rotate(Quaternion.Euler(-90, -90, 0)), 2),
 				// 1010
-				(Matrix4x4.Rotate(Quaternion.Euler(0, 0, -90)), 2),
+				(Matrix4x4.Rotate(Quaternion.Euler(0, -90, -90)), 2),
 				// 1011
 				(Matrix4x4.Rotate(Quaternion.Euler(180, -90, 0)), 3),
 				// 1100
