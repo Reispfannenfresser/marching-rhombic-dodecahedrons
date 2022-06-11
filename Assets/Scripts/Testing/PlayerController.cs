@@ -37,9 +37,16 @@ class PlayerController : MonoBehaviour {
 		}
 
 		if (Input.GetButtonDown("Fire1")) {
-			BlockData block = LooksAtBlock();
+			BlockData block = BlockToBreak();
 			if (block != null) {
 				GameController.instance.worldData.blocks[block.pos] = new BlockData(block.pos, Blocks.GetBlock("air"));
+			}
+		}
+
+		if (Input.GetButtonDown("Fire2")) {
+			BlockData block = BlockToPlace();
+			if (block != null) {
+				GameController.instance.worldData.blocks[block.pos] = new BlockData(block.pos, Blocks.GetBlock("ground"));
 			}
 		}
 
@@ -50,13 +57,28 @@ class PlayerController : MonoBehaviour {
 		head.transform.rotation = Quaternion.Euler(rotation);
 	}
 
-	private BlockData LooksAtBlock() {
+	private BlockData BlockToBreak() {
 		RaycastHit hitInfo;
 		if (Physics.Raycast(head.transform.position, head.transform.forward, out hitInfo, reach, terrain)) {
 			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point);
 			BlockData block = GameController.instance.worldData.blocks[blockPos];
 			if (block.block == Blocks.GetBlock("air")) {
 				blockPos = RDGrid.FromLocal(hitInfo.point - hitInfo.normal * 0.5f);
+				block = GameController.instance.worldData.blocks[blockPos];
+			}
+
+			return block;
+		}
+		return null;
+	}
+
+	private BlockData BlockToPlace() {
+		RaycastHit hitInfo;
+		if (Physics.Raycast(head.transform.position, head.transform.forward, out hitInfo, reach, terrain)) {
+			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point);
+			BlockData block = GameController.instance.worldData.blocks[blockPos];
+			if (block.block != Blocks.GetBlock("air")) {
+				blockPos = RDGrid.FromLocal(hitInfo.point + hitInfo.normal * 0.5f);
 				block = GameController.instance.worldData.blocks[blockPos];
 			}
 
