@@ -22,28 +22,7 @@ namespace MRD.Rendering {
 						int[] triangles;
 						Vector2[] uv;
 
-						// octahedron
-						MarchingShape.marchingOctahedron.GetMeshForPos(chunkData, blockPos, out vertices, out triangles, out uv);
-
-						triangleIndexOffset = allVertices.Count;
-						allVertices.AddRange(vertices);
-						allUV.AddRange(uv);
-						foreach(int index in triangles) {
-							allTriangles.Add(index + triangleIndexOffset);
-						}
-
-						// tetrahedron1
-						MarchingShape.marchingTetrahedron1.GetMeshForPos(chunkData, blockPos, out vertices, out triangles, out uv);
-
-						triangleIndexOffset = allVertices.Count;
-						allVertices.AddRange(vertices);
-						allUV.AddRange(uv);
-						foreach(int index in triangles) {
-							allTriangles.Add(index + triangleIndexOffset);
-						}
-
-						// tetrahedron2
-						MarchingShape.marchingTetrahedron2.GetMeshForPos(chunkData, blockPos, out vertices, out triangles, out uv);
+						MarchingShapes.rdMarcher.GetMeshForPos(chunkData, blockPos, out vertices, out triangles, out uv);
 
 						triangleIndexOffset = allVertices.Count;
 						allVertices.AddRange(vertices);
