@@ -32,11 +32,7 @@ namespace MRD.WorldGen {
 
 		private static System.Random seedGenerator = new System.Random();
 
-		private ValueMap<float, float> heightMap = new CombinedFloat2D(new ValueMap<float, float>[] {
-			new TransformedFloat2D(new PerlinNoise2D(seedGenerator), Vector2.one * 0.05f, 75f * Mathf.Deg2Rad, 10),
-			new TransformedFloat2D(new PerlinNoise2D(seedGenerator), Vector2.one * 0.01f, 45f * Mathf.Deg2Rad, 30),
-			new TransformedFloat2D(new PerlinNoise2D(seedGenerator), Vector2.one * 0.002f, 15f * Mathf.Deg2Rad, 60)
-		});
+		private ValueMap<float, float> heightMap = new Flat<float, float>(2, 0f);
 
 		private WorldData worldData {
 			get {
