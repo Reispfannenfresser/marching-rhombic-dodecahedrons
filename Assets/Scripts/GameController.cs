@@ -26,6 +26,6 @@ class GameController : MonoBehaviour
 
 	void Start()
 	{
-		worldData.blocks[Vector3Int.zero] = new BlockData(Vector3Int.zero, Blocks.INDESTRUCTIBLE);
+		worldData.blocks[Vector3Int.zero] = new BlockData(Blocks.INDESTRUCTIBLE);
 	}
 }

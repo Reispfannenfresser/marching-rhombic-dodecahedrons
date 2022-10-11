@@ -26,10 +26,10 @@ class CameraController : MonoBehaviour
 	{
 		if (Input.GetButtonDown("Fire1"))
 		{
-			BlockData block = BlockToBreak();
-			if (block != null)
+			Vector3Int? breakPos = PosToBreak();
+			if (breakPos.HasValue)
 			{
-				GameController.instance.worldData.blocks[block.pos] = null;
+				GameController.instance.worldData.blocks[breakPos.Value] = null;
 			}
 		}
 
@@ -38,7 +38,7 @@ class CameraController : MonoBehaviour
 			Vector3Int? placePos = PosToPlace();
 			if (placePos.HasValue)
 			{
-				GameController.instance.worldData.blocks[placePos.Value] = new BlockData(placePos.Value, Blocks.GetBlock("ground"));
+				GameController.instance.worldData.blocks[placePos.Value] = new BlockData(Blocks.GetBlock("ground"));
 			}
 		}
 
@@ -55,7 +55,7 @@ class CameraController : MonoBehaviour
 		transform.position += transform.right * Input.GetAxis("Horizontal") * currentMovementSpeed;
 	}
 
-	private BlockData BlockToBreak()
+	private Vector3Int? PosToBreak()
 	{
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, transform.forward, out hitInfo, reach, terrain))
@@ -64,7 +64,7 @@ class CameraController : MonoBehaviour
 			BlockData blockData = GameController.instance.worldData.blocks[blockPos];
 			if (blockData != null && !blockData.block.indestructible)
 			{
-				return blockData;
+				return blockPos;
 			}
 		}
 		return null;
