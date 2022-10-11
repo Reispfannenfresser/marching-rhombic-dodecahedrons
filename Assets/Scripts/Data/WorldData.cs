@@ -51,14 +51,14 @@ namespace MRD.Data
 			{
 				Vector3Int chunkPos = RDGrid.ToChunkPos(blockPos);
 
-				if (obj.data.ContainsKey(chunkPos))
+				if (!obj.data.ContainsKey(chunkPos))
 				{
-					Vector3Int posInChunk = RDGrid.ToPosInChunk(blockPos);
-					obj.data[chunkPos].blocks[posInChunk] = blockData;
-					obj.OnBlockDataChanged?.Invoke(blockPos);
+					obj.chunks[chunkPos] = new ChunkData(chunkPos, new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize]);
 				}
 
-				//TODO remember data of blocks that would have ended up outside of the world
+				Vector3Int posInChunk = RDGrid.ToPosInChunk(blockPos);
+				obj.data[chunkPos].blocks[posInChunk] = blockData;
+				obj.OnBlockDataChanged?.Invoke(blockPos);
 			}
 		}
 

@@ -5,15 +5,12 @@ public struct Block
 {
 	public readonly string id;
 
-	public readonly bool visible;
-
 	public readonly bool indestructible;
 
-	public Block(string id, bool visible, bool indestructible = false)
+	public Block(string id, bool indestructible = false)
 	{
 		this.id = id;
 		this.indestructible = indestructible;
-		this.visible = visible;
 		Blocks.RegisterBlock(this);
 	}
 

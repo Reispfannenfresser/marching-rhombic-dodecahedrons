@@ -68,12 +68,7 @@ namespace MRD.Rendering
 			for (int i = 0; i < gridNeighbors.Length; i++)
 			{
 				BlockData neighbor = chunkData.blocks[position + gridNeighbors[i]];
-				if (neighbor == null)
-				{
-					meshIndex = 0;
-					break;
-				}
-				if (neighbor.block.visible)
+				if (neighbor != null)
 				{
 					meshIndex += 1 << i;
 				}

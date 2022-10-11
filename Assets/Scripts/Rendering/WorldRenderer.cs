@@ -48,6 +48,10 @@ namespace MRD.Rendering
 				{
 					chunkRenderers[affectedChunkPos].UpdateMeshes();
 				}
+				else
+				{
+					RenderChunk(affectedChunkPos);
+				}
 			}
 		}
 
@@ -72,6 +76,10 @@ namespace MRD.Rendering
 				if (chunkRenderers.ContainsKey(affectedChunkPos))
 				{
 					chunkRenderers[affectedChunkPos].UpdateMeshes();
+				}
+				else
+				{
+					RenderChunk(affectedChunkPos);
 				}
 			}
 		}

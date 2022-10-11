@@ -6,14 +6,8 @@ public static class Blocks
 {
 	private static readonly Dictionary<string, Block> blocks = new Dictionary<string, Block>();
 
-	public static readonly Block GROUND = new Block("ground", true, false);
-	public static readonly Block INDESTRUCTIBLE = new Block("indestructible", true, true);
-	public static readonly Block AIR = new Block("air", false, false);
-
-	public static void Init()
-	{
-
-	}
+	public static readonly Block GROUND = new Block("ground", false);
+	public static readonly Block INDESTRUCTIBLE = new Block("indestructible", true);
 
 	public static void RegisterBlock(Block block)
 	{

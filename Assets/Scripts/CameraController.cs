@@ -29,16 +29,16 @@ class CameraController : MonoBehaviour
 			BlockData block = BlockToBreak();
 			if (block != null)
 			{
-				GameController.instance.worldData.blocks[block.pos] = new BlockData(block.pos, Blocks.GetBlock("air"));
+				GameController.instance.worldData.blocks[block.pos] = null;
 			}
 		}
 
 		if (Input.GetButtonDown("Fire2"))
 		{
-			BlockData block = BlockToPlace();
-			if (block != null)
+			Vector3Int? placePos = PosToPlace();
+			if (placePos.HasValue)
 			{
-				GameController.instance.worldData.blocks[block.pos] = new BlockData(block.pos, Blocks.GetBlock("ground"));
+				GameController.instance.worldData.blocks[placePos.Value] = new BlockData(placePos.Value, Blocks.GetBlock("ground"));
 			}
 		}
 
@@ -60,33 +60,27 @@ class CameraController : MonoBehaviour
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, transform.forward, out hitInfo, reach, terrain))
 		{
-			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point);
-			BlockData block = GameController.instance.worldData.blocks[blockPos];
-			if (block.block == Blocks.GetBlock("air"))
+			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point - hitInfo.normal * 0.5f);
+			BlockData blockData = GameController.instance.worldData.blocks[blockPos];
+			if (blockData != null && !blockData.block.indestructible)
 			{
-				blockPos = RDGrid.FromLocal(hitInfo.point - hitInfo.normal * 0.5f);
-				block = GameController.instance.worldData.blocks[blockPos];
+				return blockData;
 			}
-
-			return block;
 		}
 		return null;
 	}
 
-	private BlockData BlockToPlace()
+	private Vector3Int? PosToPlace()
 	{
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, transform.forward, out hitInfo, reach, terrain))
 		{
-			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point);
-			BlockData block = GameController.instance.worldData.blocks[blockPos];
-			if (block.block != Blocks.GetBlock("air"))
+			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point + hitInfo.normal * 0.5f);
+			BlockData blockData = GameController.instance.worldData.blocks[blockPos];
+			if (blockData == null)
 			{
-				blockPos = RDGrid.FromLocal(hitInfo.point + hitInfo.normal * 0.5f);
-				block = GameController.instance.worldData.blocks[blockPos];
+				return blockPos;
 			}
-
-			return block;
 		}
 		return null;
 	}

@@ -1,27 +1,16 @@
 using UnityEngine;
 using MRD.Rendering;
-using MRD.WorldGen;
 using MRD.Data;
 
 [RequireComponent(typeof(WorldRenderer))]
-[RequireComponent(typeof(WorldGenerator))]
 class GameController : MonoBehaviour
 {
-	[SerializeField]
-	private Vector3Int size = Vector3Int.one;
-
 	public readonly WorldData worldData = new WorldData();
 	public WorldRenderer worldRenderer { get; private set; } = null;
-	public WorldGenerator worldGenerator { get; private set; } = null;
 	public static GameController instance = null;
 
 	void Awake()
 	{
-		Blocks.Init();
-
-		worldRenderer = GetComponent<WorldRenderer>();
-		worldGenerator = GetComponent<WorldGenerator>();
-
 		if (instance != null)
 		{
 			Debug.LogError("A GameController instance already exist!");
@@ -32,17 +21,11 @@ class GameController : MonoBehaviour
 			instance = this;
 		}
 
-		for (int x = -size.x; x < size.x; x++)
-		{
-			for (int z = -size.z; z < size.z; z++)
-			{
-				for (int y = -size.y; y < size.y; y++)
-				{
-					Vector3Int pos = new Vector3Int(x, y, z);
-					worldGenerator.MarkForGeneration(pos);
-					worldRenderer.RenderChunk(pos);
-				}
-			}
-		}
+		worldRenderer = GetComponent<WorldRenderer>();
+	}
+
+	void Start()
+	{
+		worldData.blocks[Vector3Int.zero] = new BlockData(Vector3Int.zero, Blocks.INDESTRUCTIBLE);
 	}
 }
