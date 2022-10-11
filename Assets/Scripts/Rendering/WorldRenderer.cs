@@ -1,11 +1,28 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using MRD.Data;
 
 namespace MRD.Rendering
 {
 	public class WorldRenderer : MonoBehaviour
 	{
+		private bool initialised = false;
+
+		private WorldData _worldData = null;
+		public WorldData worldData
+		{
+			get
+			{
+				return _worldData;
+			}
+			set
+			{
+				_worldData = value;
+				UpdateRenderers();
+			}
+		}
+
 		[SerializeField]
 		private GameObject chunkRenderer = null;
 		protected Dictionary<Vector3Int, ChunkRenderer> chunkRenderers = new Dictionary<Vector3Int, ChunkRenderer>();
@@ -14,6 +31,20 @@ namespace MRD.Rendering
 		{
 			GameController.instance.worldData.OnBlockDataChanged += OnBlockDataChanged;
 			GameController.instance.worldData.OnChunkDataAdded += OnChunkDataAdded;
+		}
+
+		public void Initialise(WorldData worldData)
+		{
+			if (initialised)
+			{
+				return;
+			}
+
+			_worldData = worldData;
+
+			initialised = true;
+
+			UpdateRenderers();
 		}
 
 		public void RenderChunk(Vector3Int chunkPos)
@@ -26,10 +57,20 @@ namespace MRD.Rendering
 				newGameObject.name = "" + chunkPos;
 
 				ChunkRenderer newChunkRenderer = newGameObject.GetComponent<ChunkRenderer>();
-				newChunkRenderer.chunkPos = chunkPos;
+				newChunkRenderer.Initialise(worldData, chunkPos);
 
 				chunkRenderers.Add(chunkPos, newChunkRenderer);
 			}
+		}
+
+		public void UpdateRenderers()
+		{
+			foreach (Vector3Int chunkPos in chunkRenderers.Keys)
+			{
+				Destroy(chunkRenderers[chunkPos].gameObject);
+			}
+
+			chunkRenderers.Clear();
 		}
 
 		private void OnChunkDataAdded(Vector3Int chunkPos)
@@ -48,7 +89,7 @@ namespace MRD.Rendering
 			{
 				if (chunkRenderers.ContainsKey(affectedChunkPos))
 				{
-					chunkRenderers[affectedChunkPos].UpdateMeshes();
+					chunkRenderers[affectedChunkPos].UpdateMesh();
 				}
 				else
 				{
@@ -77,7 +118,7 @@ namespace MRD.Rendering
 			{
 				if (chunkRenderers.ContainsKey(affectedChunkPos))
 				{
-					chunkRenderers[affectedChunkPos].UpdateMeshes();
+					chunkRenderers[affectedChunkPos].UpdateMesh();
 				}
 				else
 				{

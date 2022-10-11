@@ -22,6 +22,7 @@ class GameController : MonoBehaviour
 		}
 
 		worldRenderer = GetComponent<WorldRenderer>();
+		worldRenderer.Initialise(worldData);
 	}
 
 	void Start()
