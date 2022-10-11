@@ -2,7 +2,8 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public enum FaceDirection : int {
+public enum FaceDirection : int
+{
 	UL,
 	UF,
 	UR,
@@ -18,7 +19,8 @@ public enum FaceDirection : int {
 }
 
 [System.Serializable]
-public enum CornerDirection : int {
+public enum CornerDirection : int
+{
 	U,
 	L,
 	F,
@@ -28,7 +30,8 @@ public enum CornerDirection : int {
 }
 
 [System.Serializable]
-public enum ChunkNeighborDirection : int {
+public enum ChunkNeighborDirection : int
+{
 	U,
 	L,
 	F,
@@ -43,7 +46,8 @@ public enum ChunkNeighborDirection : int {
 	RB
 }
 
-public static class FaceDirectionExtensions {
+public static class FaceDirectionExtensions
+{
 	private static Vector3Int[] vectors = {
 		// UL
 		new Vector3Int(-1, 1, -1),
@@ -98,16 +102,19 @@ public static class FaceDirectionExtensions {
 		FaceDirection.UF
 	};
 
-	public static Vector3Int GetVector(this FaceDirection dir) {
-		return vectors[(int) dir];
+	public static Vector3Int GetVector(this FaceDirection dir)
+	{
+		return vectors[(int)dir];
 	}
 
-	public static FaceDirection GetOpposite(this FaceDirection dir) {
-		return opposites[(int) dir];
+	public static FaceDirection GetOpposite(this FaceDirection dir)
+	{
+		return opposites[(int)dir];
 	}
 }
 
-public static class CornerDirectionExtensions {
+public static class CornerDirectionExtensions
+{
 	private static Vector3Int[] vectors = {
 		// U
 		new Vector3Int(-1, 2, -1),
@@ -132,16 +139,19 @@ public static class CornerDirectionExtensions {
 		CornerDirection.U
 	};
 
-	public static Vector3Int GetVector(this CornerDirection dir) {
-		return vectors[(int) dir];
+	public static Vector3Int GetVector(this CornerDirection dir)
+	{
+		return vectors[(int)dir];
 	}
 
-	public static CornerDirection GetOpposite(this CornerDirection dir) {
-		return opposites[(int) dir];
+	public static CornerDirection GetOpposite(this CornerDirection dir)
+	{
+		return opposites[(int)dir];
 	}
 }
 
-public static class ChunkNeighborDirectionExtensions {
+public static class ChunkNeighborDirectionExtensions
+{
 	private static Vector3Int[] vectors = {
 		// U
 		new Vector3Int(0, 1, 0),
@@ -196,11 +206,13 @@ public static class ChunkNeighborDirectionExtensions {
 		ChunkNeighborDirection.LF
 	};
 
-	public static Vector3Int GetVector(this ChunkNeighborDirection dir) {
-		return vectors[(int) dir];
+	public static Vector3Int GetVector(this ChunkNeighborDirection dir)
+	{
+		return vectors[(int)dir];
 	}
 
-	public static ChunkNeighborDirection GetOpposite(this ChunkNeighborDirection dir) {
-		return opposites[(int) dir];
+	public static ChunkNeighborDirection GetOpposite(this ChunkNeighborDirection dir)
+	{
+		return opposites[(int)dir];
 	}
 }

@@ -1,51 +1,43 @@
 using UnityEngine;
 using MRD.Data;
 
-[RequireComponent(typeof(Rigidbody))]
-class PlayerController : MonoBehaviour {
+class CameraController : MonoBehaviour
+{
 	[SerializeField]
 	float movementSpeed = 10f;
 	[SerializeField]
+	float movementMultiplier = 2f;
+	[SerializeField]
 	float turnSpeed = 10f;
-	[SerializeField]
-	float runMultiplier = 2.5f;
-	[SerializeField]
-	float jumpStrength = 5f;
-	[SerializeField]
-	GameObject head = null;
 	[SerializeField]
 	float reach = 5f;
 	[SerializeField]
 	LayerMask terrain = 0;
 
-	Vector3 rotation = new Vector3(0, 90, 0);
-	Rigidbody rb = null;
+	Vector3 rotation = new Vector3(0, 0, 0);
 
-	void Awake() {
-		rb = GetComponent<Rigidbody>();
+	void Awake()
+	{
 		Cursor.lockState = CursorLockMode.Locked;
 		transform.rotation = Quaternion.Euler(rotation);
 	}
 
-	void Update() {
-		Vector3 horizontal = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
-		bool running = Input.GetButton("Fire3");
-		rb.velocity = horizontal * movementSpeed * (running ? runMultiplier : 1) + Vector3.up * rb.velocity.y;
-
-		if (Input.GetButtonDown("Jump")) {
-			rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.x);
-		}
-
-		if (Input.GetButtonDown("Fire1")) {
+	void Update()
+	{
+		if (Input.GetButtonDown("Fire1"))
+		{
 			BlockData block = BlockToBreak();
-			if (block != null) {
+			if (block != null)
+			{
 				GameController.instance.worldData.blocks[block.pos] = new BlockData(block.pos, Blocks.GetBlock("air"));
 			}
 		}
 
-		if (Input.GetButtonDown("Fire2")) {
+		if (Input.GetButtonDown("Fire2"))
+		{
 			BlockData block = BlockToPlace();
-			if (block != null) {
+			if (block != null)
+			{
 				GameController.instance.worldData.blocks[block.pos] = new BlockData(block.pos, Blocks.GetBlock("ground"));
 			}
 		}
@@ -53,16 +45,25 @@ class PlayerController : MonoBehaviour {
 		rotation += new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * turnSpeed;
 		rotation.x = Mathf.Clamp(rotation.x, -90, 90);
 
-		transform.rotation = Quaternion.Euler(0, rotation.y, 0);
-		head.transform.rotation = Quaternion.Euler(rotation);
+		transform.rotation = Quaternion.Euler(rotation);
+
+
+		float currentMovementMultiplier = Input.GetButton("Fire3") ? movementMultiplier : 1;
+		float currentMovementSpeed = movementSpeed * Time.deltaTime * currentMovementMultiplier;
+
+		transform.position += transform.forward * Input.GetAxis("Vertical") * currentMovementSpeed;
+		transform.position += transform.right * Input.GetAxis("Horizontal") * currentMovementSpeed;
 	}
 
-	private BlockData BlockToBreak() {
+	private BlockData BlockToBreak()
+	{
 		RaycastHit hitInfo;
-		if (Physics.Raycast(head.transform.position, head.transform.forward, out hitInfo, reach, terrain)) {
+		if (Physics.Raycast(transform.position, transform.forward, out hitInfo, reach, terrain))
+		{
 			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point);
 			BlockData block = GameController.instance.worldData.blocks[blockPos];
-			if (block.block == Blocks.GetBlock("air")) {
+			if (block.block == Blocks.GetBlock("air"))
+			{
 				blockPos = RDGrid.FromLocal(hitInfo.point - hitInfo.normal * 0.5f);
 				block = GameController.instance.worldData.blocks[blockPos];
 			}
@@ -72,12 +73,15 @@ class PlayerController : MonoBehaviour {
 		return null;
 	}
 
-	private BlockData BlockToPlace() {
+	private BlockData BlockToPlace()
+	{
 		RaycastHit hitInfo;
-		if (Physics.Raycast(head.transform.position, head.transform.forward, out hitInfo, reach, terrain)) {
+		if (Physics.Raycast(transform.position, transform.forward, out hitInfo, reach, terrain))
+		{
 			Vector3Int blockPos = RDGrid.FromLocal(hitInfo.point);
 			BlockData block = GameController.instance.worldData.blocks[blockPos];
-			if (block.block != Blocks.GetBlock("air")) {
+			if (block.block != Blocks.GetBlock("air"))
+			{
 				blockPos = RDGrid.FromLocal(hitInfo.point + hitInfo.normal * 0.5f);
 				block = GameController.instance.worldData.blocks[blockPos];
 			}

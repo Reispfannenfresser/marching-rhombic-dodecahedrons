@@ -4,24 +4,31 @@ using System;
 using UnityEngine;
 
 #nullable enable
-public static class JsonHelper {
+public static class JsonHelper
+{
 	private static JsonSerializer serializer = new JsonSerializer();
 
-	public static T? Deserialize<T>(string text) {
-		try {
+	public static T? Deserialize<T>(string text)
+	{
+		try
+		{
 			return serializer.Deserialize<T>(new JsonTextReader(new StringReader(text)));
 		}
-		catch(Exception e) {
+		catch (Exception e)
+		{
 			Debug.LogError(e);
 			return Deserialize<T>("{}");
 		}
 	}
 
-	public static T? DeserializeFromFile<T>(string path) {
-		try {
+	public static T? DeserializeFromFile<T>(string path)
+	{
+		try
+		{
 			return serializer.Deserialize<T>(new JsonTextReader(File.OpenText(path)));
 		}
-		catch(Exception e) {
+		catch (Exception e)
+		{
 			Debug.LogError(e);
 			return Deserialize<T>("{}");
 		}

@@ -2,20 +2,25 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using MeshData;
 using MRD.Data;
 
-namespace MRD.Rendering {
-	public static class ChunkMeshGenerator {
-		public static Mesh GenerateMesh(ChunkData chunkData) {
+namespace MRD.Rendering
+{
+	public static class ChunkMeshGenerator
+	{
+		public static Mesh GenerateMesh(ChunkData chunkData)
+		{
 			List<Vector3> allVertices = new List<Vector3>();
 			List<int> allTriangles = new List<int>();
 			List<Vector2> allUV = new List<Vector2>();
 			int triangleIndexOffset = 0;
 
-			for(int x = 0; x < RDGrid.chunkSize; x++) {
-				for(int y = 0; y < RDGrid.chunkSize; y++) {
-					for(int z = 0; z < RDGrid.chunkSize; z++) {
+			for (int x = 0; x < RDGrid.chunkSize; x++)
+			{
+				for (int y = 0; y < RDGrid.chunkSize; y++)
+				{
+					for (int z = 0; z < RDGrid.chunkSize; z++)
+					{
 						Vector3Int blockPos = new Vector3Int(x, y, z);
 
 						Vector3[] vertices;
@@ -27,7 +32,8 @@ namespace MRD.Rendering {
 						triangleIndexOffset = allVertices.Count;
 						allVertices.AddRange(vertices);
 						allUV.AddRange(uv);
-						foreach(int index in triangles) {
+						foreach (int index in triangles)
+						{
 							allTriangles.Add(index + triangleIndexOffset);
 						}
 					}

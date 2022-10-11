@@ -2,20 +2,29 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public static class Blocks {
+public static class Blocks
+{
 	private static readonly Dictionary<string, Block> blocks = new Dictionary<string, Block>();
 
-	public static void LoadBlocks() {
-		string path = @"Data/Blocks";
-		foreach (string filePath in Directory.EnumerateFiles(path)) {
-			string name = Path.GetFileNameWithoutExtension(new FileInfo(filePath).Name);
-			blocks[name] = new Block(name);
-		}
+	public static readonly Block GROUND = new Block("ground", true, false);
+	public static readonly Block INDESTRUCTIBLE = new Block("indestructible", true, true);
+	public static readonly Block AIR = new Block("air", false, false);
+
+	public static void Init()
+	{
+
 	}
 
-	public static Block GetBlock(string id) {
-		if (!blocks.ContainsKey(id)) {
-			blocks.Add(id, new Block(id));
+	public static void RegisterBlock(Block block)
+	{
+		blocks[block.id] = block;
+	}
+
+	public static Block GetBlock(string id)
+	{
+		if (!blocks.ContainsKey(id))
+		{
+			throw new System.ArgumentException("A block with that ID doesn't exist");
 		}
 
 		return blocks[id];

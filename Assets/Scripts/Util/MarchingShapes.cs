@@ -2,8 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using MeshData;
 
-namespace MRD.Rendering {
-	public static class MarchingShapes {
+namespace MRD.Rendering
+{
+	public static class MarchingShapes
+	{
 		private static MeshData.MeshData[] tetrahedronMeshes = new MeshData.MeshData[] {
 			// 0 or 4
 			new MeshData.MeshData(

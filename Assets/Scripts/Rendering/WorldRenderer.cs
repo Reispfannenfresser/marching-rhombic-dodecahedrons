@@ -2,19 +2,24 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-namespace MRD.Rendering {
-	public class WorldRenderer : MonoBehaviour {
+namespace MRD.Rendering
+{
+	public class WorldRenderer : MonoBehaviour
+	{
 		[SerializeField]
 		private GameObject chunkRenderer = null;
 		protected Dictionary<Vector3Int, ChunkRenderer> chunkRenderers = new Dictionary<Vector3Int, ChunkRenderer>();
 
-		void Awake() {
+		void Awake()
+		{
 			GameController.instance.worldData.OnBlockDataChanged += OnBlockDataChanged;
 			GameController.instance.worldData.OnChunkDataAdded += OnChunkDataAdded;
 		}
 
-		public void RenderChunk(Vector3Int chunkPos) {
-			if (!chunkRenderers.ContainsKey(chunkPos)) {
+		public void RenderChunk(Vector3Int chunkPos)
+		{
+			if (!chunkRenderers.ContainsKey(chunkPos))
+			{
 				Debug.Log("Creating renderer for: " + chunkPos);
 
 				GameObject newGameObject = Instantiate(chunkRenderer, Vector3.zero, Quaternion.identity, transform);
@@ -25,38 +30,47 @@ namespace MRD.Rendering {
 			}
 		}
 
-		private void OnChunkDataAdded(Vector3Int chunkPos) {
+		private void OnChunkDataAdded(Vector3Int chunkPos)
+		{
 			ISet<Vector3Int> affectedChunkPositions = new HashSet<Vector3Int>();
 
 			// cache affected chunk positions
 			affectedChunkPositions.Add(chunkPos);
-			foreach (ChunkNeighborDirection dir in Enum.GetValues(typeof(ChunkNeighborDirection))) {
+			foreach (ChunkNeighborDirection dir in Enum.GetValues(typeof(ChunkNeighborDirection)))
+			{
 				affectedChunkPositions.Add(chunkPos + dir.GetVector());
 			}
 
 			// update chunk meshes
-			foreach (Vector3Int affectedChunkPos in affectedChunkPositions) {
-				if (chunkRenderers.ContainsKey(affectedChunkPos)) {
+			foreach (Vector3Int affectedChunkPos in affectedChunkPositions)
+			{
+				if (chunkRenderers.ContainsKey(affectedChunkPos))
+				{
 					chunkRenderers[affectedChunkPos].UpdateMeshes();
 				}
 			}
 		}
 
-		private void OnBlockDataChanged(Vector3Int blockPos) {
+		private void OnBlockDataChanged(Vector3Int blockPos)
+		{
 			ISet<Vector3Int> affectedChunkPositions = new HashSet<Vector3Int>();
 
 			// cache affected chunk positions
 			affectedChunkPositions.Add(RDGrid.ToChunkPos(blockPos));
-			foreach (FaceDirection dir in Enum.GetValues(typeof(FaceDirection))) {
+			foreach (FaceDirection dir in Enum.GetValues(typeof(FaceDirection)))
+			{
 				affectedChunkPositions.Add(RDGrid.ToChunkPos(blockPos + dir.GetVector()));
 			}
-			foreach (CornerDirection dir in Enum.GetValues(typeof(CornerDirection))) {
+			foreach (CornerDirection dir in Enum.GetValues(typeof(CornerDirection)))
+			{
 				affectedChunkPositions.Add(RDGrid.ToChunkPos(blockPos + dir.GetVector()));
 			}
 
 			// update chunk meshes
-			foreach (Vector3Int affectedChunkPos in affectedChunkPositions) {
-				if (chunkRenderers.ContainsKey(affectedChunkPos)) {
+			foreach (Vector3Int affectedChunkPos in affectedChunkPositions)
+			{
+				if (chunkRenderers.ContainsKey(affectedChunkPos))
+				{
 					chunkRenderers[affectedChunkPos].UpdateMeshes();
 				}
 			}
