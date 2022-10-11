@@ -29,4 +29,11 @@ class GameController : MonoBehaviour
 	{
 		worldData.blocks[Vector3Int.zero] = new BlockData(Blocks.INDESTRUCTIBLE);
 	}
+
+	public void ClearWorld()
+	{
+		WorldData newWorld = new WorldData();
+		worldRenderer.worldData = newWorld;
+		worldData.blocks[Vector3Int.zero] = new BlockData(Blocks.INDESTRUCTIBLE);
+	}
 }
