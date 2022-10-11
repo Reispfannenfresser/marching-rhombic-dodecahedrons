@@ -7,7 +7,7 @@ namespace MRD.Rendering
 {
 	public abstract class MarchingShape
 	{
-		public abstract void GetMeshForPos(ChunkData chunkData, Vector3Int position, out Vector3[] vertices, out int[] triangles, out Vector2[] uv);
+		public abstract void GetMeshForPos(WorldData worldData, Vector3Int position, out Vector3[] vertices, out int[] triangles, out Vector2[] uv);
 	}
 
 	public class CombinedMarchingShape : MarchingShape
@@ -19,7 +19,7 @@ namespace MRD.Rendering
 			this.shapes = shapes;
 		}
 
-		public override void GetMeshForPos(ChunkData chunkData, Vector3Int position, out Vector3[] vertices, out int[] triangles, out Vector2[] uv)
+		public override void GetMeshForPos(WorldData worldData, Vector3Int position, out Vector3[] vertices, out int[] triangles, out Vector2[] uv)
 		{
 			List<Vector3> allVertices = new List<Vector3>();
 			List<int> allTriangles = new List<int>();
@@ -30,7 +30,7 @@ namespace MRD.Rendering
 				Vector3[] newVertices;
 				int[] newTriangles;
 				Vector2[] newUV;
-				shape.GetMeshForPos(chunkData, position, out newVertices, out newTriangles, out newUV);
+				shape.GetMeshForPos(worldData, position, out newVertices, out newTriangles, out newUV);
 
 				int triangleIndexOffset = allVertices.Count;
 				allVertices.AddRange(newVertices);
@@ -62,12 +62,12 @@ namespace MRD.Rendering
 			this.meshes = meshes;
 		}
 
-		public override void GetMeshForPos(ChunkData chunkData, Vector3Int position, out Vector3[] vertices, out int[] triangles, out Vector2[] uv)
+		public override void GetMeshForPos(WorldData worldData, Vector3Int position, out Vector3[] vertices, out int[] triangles, out Vector2[] uv)
 		{
 			int meshIndex = 0;
 			for (int i = 0; i < gridNeighbors.Length; i++)
 			{
-				BlockData neighbor = chunkData.blocks[position + gridNeighbors[i]];
+				BlockData neighbor = worldData.blocks[position + gridNeighbors[i]];
 				if (neighbor != null)
 				{
 					meshIndex += 1 << i;
@@ -85,7 +85,7 @@ namespace MRD.Rendering
 			{
 				VertexData vertex = meshData.vertices[i];
 
-				vertices[i] = transformationMatrix.MultiplyVector(vertex.position) + RDGrid.ToLocal(position) + gridOffset;
+				vertices[i] = transformationMatrix.MultiplyVector(vertex.position) + RDGrid.ToLocal(RDGrid.ToPosInChunk(position)) + gridOffset;
 				uv[i] = vertex.uv;
 			}
 		}

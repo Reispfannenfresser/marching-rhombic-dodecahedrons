@@ -8,7 +8,7 @@ namespace MRD.Rendering
 {
 	public static class ChunkMeshGenerator
 	{
-		public static Mesh GenerateMesh(ChunkData chunkData)
+		public static Mesh GenerateMesh(WorldData worldData, Vector3Int chunkPos)
 		{
 			List<Vector3> allVertices = new List<Vector3>();
 			List<int> allTriangles = new List<int>();
@@ -21,13 +21,13 @@ namespace MRD.Rendering
 				{
 					for (int z = 0; z < RDGrid.chunkSize; z++)
 					{
-						Vector3Int blockPos = new Vector3Int(x, y, z);
+						Vector3Int blockPos = RDGrid.FromChunkPos(chunkPos, new Vector3Int(x, y, z));
 
 						Vector3[] vertices;
 						int[] triangles;
 						Vector2[] uv;
 
-						MarchingShapes.rdMarcher.GetMeshForPos(chunkData, blockPos, out vertices, out triangles, out uv);
+						MarchingShapes.rdMarcher.GetMeshForPos(worldData, blockPos, out vertices, out triangles, out uv);
 
 						triangleIndexOffset = allVertices.Count;
 						allVertices.AddRange(vertices);

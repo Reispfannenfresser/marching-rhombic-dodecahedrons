@@ -38,12 +38,7 @@ namespace MRD.Rendering
 		{
 			Debug.Log("Updating Mesh of: " + chunkPos);
 
-			ChunkData chunkData = GameController.instance.worldData.chunks[chunkPos];
-			if (chunkData == null)
-			{
-				chunkData = new ChunkData(GameController.instance.worldData, chunkPos, new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize]);
-			}
-			meshFilter.mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
+			meshFilter.mesh = ChunkMeshGenerator.GenerateMesh(GameController.instance.worldData, chunkPos);
 
 			if (meshFilter.mesh.vertices.Length > 0)
 			{
