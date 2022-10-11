@@ -23,6 +23,8 @@ namespace MRD.Rendering
 				Debug.Log("Creating renderer for: " + chunkPos);
 
 				GameObject newGameObject = Instantiate(chunkRenderer, Vector3.zero, Quaternion.identity, transform);
+				newGameObject.name = "" + chunkPos;
+
 				ChunkRenderer newChunkRenderer = newGameObject.GetComponent<ChunkRenderer>();
 				newChunkRenderer.chunkPos = chunkPos;
 
