@@ -41,7 +41,7 @@ namespace MRD.Rendering
 			ChunkData chunkData = GameController.instance.worldData.chunks[chunkPos];
 			if (chunkData == null)
 			{
-				chunkData = new ChunkData(chunkPos, new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize]);
+				chunkData = new ChunkData(GameController.instance.worldData, chunkPos, new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize]);
 			}
 			meshFilter.mesh = ChunkMeshGenerator.GenerateMesh(chunkData);
 

@@ -53,7 +53,7 @@ namespace MRD.Data
 
 				if (!obj.data.ContainsKey(chunkPos))
 				{
-					obj.chunks[chunkPos] = new ChunkData(chunkPos, new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize]);
+					obj.chunks[chunkPos] = new ChunkData(obj, chunkPos, new BlockData[RDGrid.chunkSize, RDGrid.chunkSize, RDGrid.chunkSize]);
 				}
 
 				Vector3Int posInChunk = RDGrid.ToPosInChunk(blockPos);

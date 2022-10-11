@@ -17,7 +17,7 @@ namespace MRD.Data
 					return obj.data[posInChunk.x, posInChunk.y, posInChunk.z];
 				}
 
-				return GameController.instance.worldData.blocks[RDGrid.FromChunkPos(obj.chunkPos, posInChunk)];
+				return obj.world.blocks[RDGrid.FromChunkPos(obj.chunkPos, posInChunk)];
 			}
 
 			protected override void Set(Vector3Int posInChunk, BlockData value)
@@ -28,17 +28,20 @@ namespace MRD.Data
 				}
 				else
 				{
-					GameController.instance.worldData.blocks[RDGrid.FromChunkPos(obj.chunkPos, posInChunk)] = value;
+					obj.world.blocks[RDGrid.FromChunkPos(obj.chunkPos, posInChunk)] = value;
 				}
 			}
 		}
+
+		public readonly WorldData world;
 
 		public readonly Vector3Int chunkPos;
 		public readonly BlockIndexer blocks;
 		private BlockData[,,] data;
 
-		public ChunkData(Vector3Int chunkPos, BlockData[,,] data)
+		public ChunkData(WorldData world, Vector3Int chunkPos, BlockData[,,] data)
 		{
+			this.world = world;
 			this.chunkPos = chunkPos;
 			this.data = data;
 			this.blocks = new BlockIndexer(this);
